@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import ErrorBoundary from "@/components/ErrorBoundary";
-import { site } from "@/data/site";
+import { education, site } from "@/data/site";
 
 const Lanyard = dynamic(() => import("@/components/lanyard/Lanyard"), {
   ssr: false,
@@ -87,14 +87,36 @@ export default function Hero({ showApp }: HeroProps) {
               {site.about}
             </motion.p>
 
-            <motion.p
+            <motion.div
               initial={false}
               animate={startAnim ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
               transition={{ duration: 0.55, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="surface mt-6 max-w-[32rem] rounded-2xl px-5 py-4 font-[family-name:var(--font-dm-mono)] text-[12px] tracking-[0.06em]"
+              className="surface mt-6 max-w-[32rem] rounded-2xl px-5 py-4"
             >
-              {site.fact}
-            </motion.p>
+              <div className="grid gap-4">
+                {education.map((item) => {
+                  const current = item.id === "feup";
+                  return (
+                    <div
+                      key={item.id}
+                      className={current ? "" : "border-t border-[var(--border)] pt-4"}
+                    >
+                      <p
+                        className="mb-1 font-[family-name:var(--font-dm-mono)] text-[11px] tracking-[0.14em]"
+                        style={{ color: current ? "var(--accent)" : "var(--text-muted)" }}
+                      >
+                        {current ? "NOW" : "COMPLETED"}
+                      </p>
+                      <p className="text-sm leading-snug">{item.title}</p>
+                      <p className="mt-1 text-xs text-[var(--text-muted)]">
+                        {item.school}
+                        {item.id === "uminho" ? " · 150/200" : ""}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            </motion.div>
 
             <motion.div
               initial={false}

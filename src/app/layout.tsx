@@ -18,7 +18,7 @@ const plexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   title: "Rui Mendes — Data Science & Engineering",
   description:
-    "Rui Mendes portfolio. Master’s in Data Science and Engineering at FEUP. Web products, admin panels and data systems.",
+    "Rui Mendes portfolio. Master’s in Data Science and Engineering at FEUP (in progress). Web products, staff systems and data work.",
 };
 
 export const viewport: Viewport = {

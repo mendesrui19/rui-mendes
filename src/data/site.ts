@@ -9,7 +9,7 @@ export const site = {
   role: "Data Science & Engineering · FEUP",
   available: "Open to work",
   about:
-    "Master’s in Data Science and Engineering at FEUP. Bachelor’s in Information Systems Engineering and Management at the University of Minho (150/200). I build end-to-end web products — sites, catalogues and admin panels — and I’m going deeper into data, models and intelligent systems.",
+    "I ship web products people can open — a poetry social app, restaurant and festival systems, catalogues and staff panels. Built with the stack I use every day: TypeScript, React, Next.js, SQL and Supabase.",
   fact: "Felgueiras · FEUP · UMinho",
   social: {
     linkedin: "https://www.linkedin.com/in/ruimiguelmendes",
