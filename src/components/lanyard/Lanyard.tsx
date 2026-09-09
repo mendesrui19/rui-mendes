@@ -255,11 +255,11 @@ function Band({ maxSpeed = 50, minSpeed = 10 }: { maxSpeed?: number; minSpeed?: 
             onPointerOver={() => hover(true)}
             onPointerOut={() => hover(false)}
             onPointerUp={(e) => {
-              e.target.releasePointerCapture(e.pointerId);
+              (e.target as Element).releasePointerCapture(e.pointerId);
               drag(false);
             }}
             onPointerDown={(e) => {
-              e.target.setPointerCapture(e.pointerId);
+              (e.target as Element).setPointerCapture(e.pointerId);
               drag(new THREE.Vector3().copy(e.point).sub(vec.copy(card.current!.translation())));
             }}
           >
