@@ -116,33 +116,35 @@ export default function ContactForm() {
       </form>
 
       <div className="mt-8 border-t border-[color-mix(in_oklch,var(--accent)_22%,transparent)] pt-6">
-        <p className="mb-4 text-sm text-[var(--text-muted)]">Links</p>
-        <a href={site.social.linkedin} target="_blank" rel="noopener noreferrer" className="social-row mb-3">
-          <span className="flex min-w-0 items-center gap-3">
-            <span className="social-chip">
+        <p className="mb-4 font-[family-name:var(--font-dm-mono)] text-[12px] tracking-[0.16em] text-[var(--accent)]">
+          Find me
+        </p>
+        <a href={site.social.linkedin} target="_blank" rel="noopener noreferrer" className="social-row social-link is-linkedin mb-3">
+          <span className="flex min-w-0 items-center gap-3.5">
+            <span className="social-chip social-chip--linkedin">
               <FaLinkedinIn />
             </span>
             <span>
-              <span className="block text-sm font-medium">LinkedIn</span>
-              <span className="block text-xs text-[var(--text-muted)]">/in/ruimiguelmendes</span>
+              <span className="block text-base font-semibold">LinkedIn</span>
+              <span className="block text-xs text-[var(--accent)]">/in/ruimiguelmendes</span>
             </span>
           </span>
-          <span className="social-chip">
-            <ArrowUpRight size={14} />
+          <span className="social-chip social-chip--go">
+            <ArrowUpRight size={16} />
           </span>
         </a>
-        <a href={site.social.github} target="_blank" rel="noopener noreferrer" className="social-row">
-          <span className="flex min-w-0 items-center gap-3">
-            <span className="social-chip">
+        <a href={site.social.github} target="_blank" rel="noopener noreferrer" className="social-row social-link is-github">
+          <span className="flex min-w-0 items-center gap-3.5">
+            <span className="social-chip social-chip--github">
               <FaGithub />
             </span>
             <span>
-              <span className="block text-sm font-medium">GitHub</span>
-              <span className="block text-xs text-[var(--text-muted)]">@mendesrui19</span>
+              <span className="block text-base font-semibold">GitHub</span>
+              <span className="block text-xs text-[var(--accent)]">@mendesrui19</span>
             </span>
           </span>
-          <span className="social-chip">
-            <ArrowUpRight size={14} />
+          <span className="social-chip social-chip--go">
+            <ArrowUpRight size={16} />
           </span>
         </a>
       </div>
