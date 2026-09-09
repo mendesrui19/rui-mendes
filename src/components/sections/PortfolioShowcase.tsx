@@ -2,38 +2,20 @@
 
 import { useMemo, useState } from "react";
 import { education, experience, projects, techStacks } from "@/data/site";
-import { matchProjects } from "@/lib/matchProjects";
 import PortfolioCard from "./PortfolioCard";
-import ProjectMatch from "./ProjectMatch";
 
 const filters = ["All", "Web", "Community", "Data"] as const;
 
 export default function PortfolioShowcase() {
   const [activeTab, setActiveTab] = useState("projects");
   const [filter, setFilter] = useState<(typeof filters)[number]>("All");
-  const [query, setQuery] = useState("");
-
-  const ranked = useMemo(() => matchProjects(query), [query]);
-  const searching = query.trim().length > 0;
 
   const visible = useMemo(() => {
-    if (searching) {
-      const scoped =
-        filter === "All" ? ranked : ranked.filter((item) => item.project.category === filter);
-      return {
-        featured: scoped[0]?.project ?? null,
-        featuredHits: scoped[0]?.hits,
-        rest: scoped.slice(1).map((item) => item.project),
-        restHits: Object.fromEntries(scoped.slice(1).map((item) => [item.project.id, item.hits])),
-        count: scoped.length,
-      };
-    }
-
     const list = filter === "All" ? projects : projects.filter((item) => item.category === filter);
-    const featured = list.find((item) => item.featured) ?? null;
+    const featured = list.find((item) => item.featured);
     const rest = featured ? list.filter((item) => item.id !== featured.id) : list;
-    return { featured, featuredHits: undefined, rest, restHits: {} as Record<string, string[]>, count: list.length };
-  }, [filter, ranked, searching]);
+    return { featured, rest };
+  }, [filter]);
 
   return (
     <section id="portfolio" className="page-shell section text-white">
@@ -74,8 +56,6 @@ export default function PortfolioShowcase() {
 
       {activeTab === "projects" && (
         <div className="space-y-6">
-          <ProjectMatch query={query} onQuery={setQuery} resultCount={visible.count} />
-
           <div className="flex flex-wrap gap-2">
             {filters.map((item) => (
               <button
@@ -93,19 +73,11 @@ export default function PortfolioShowcase() {
             ))}
           </div>
 
-          {searching && visible.count === 0 ? (
-            <p className="rounded-2xl border border-[var(--border)] px-5 py-8 text-sm text-[var(--text-muted)]">
-              No close match for that text. Try PWA, POS, Prolog or a stack name.
-            </p>
-          ) : null}
-
-          {visible.featured ? (
-            <PortfolioCard project={visible.featured} featured hits={visible.featuredHits} />
-          ) : null}
+          {visible.featured ? <PortfolioCard project={visible.featured} featured /> : null}
 
           <div className="grid gap-5 md:grid-cols-2">
             {visible.rest.map((item) => (
-              <PortfolioCard key={item.id} project={item} hits={visible.restHits[item.id]} />
+              <PortfolioCard key={item.id} project={item} />
             ))}
           </div>
         </div>

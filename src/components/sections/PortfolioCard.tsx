@@ -8,10 +8,9 @@ import CopyCode from "@/components/ui/CopyCode";
 type Props = {
   project: Project;
   featured?: boolean;
-  hits?: string[];
 };
 
-export default function PortfolioCard({ project, featured = false, hits }: Props) {
+export default function PortfolioCard({ project, featured = false }: Props) {
   const router = useRouter();
   const primaryCode = project.access?.codes?.[0];
   const contain = project.imageFit === "contain";
@@ -59,11 +58,6 @@ export default function PortfolioCard({ project, featured = false, hits }: Props
           {project.title}
         </h3>
         <p className="line-clamp-3 text-[13px] leading-relaxed text-[var(--text-secondary)]">{project.description}</p>
-        {hits && hits.length > 0 ? (
-          <p className="mt-3 font-[family-name:var(--font-dm-mono)] text-[11px] tracking-[0.04em] text-[var(--accent)]">
-            matched · {hits.join(" · ")}
-          </p>
-        ) : null}
 
         {primaryCode ? (
           <div className="mt-4 max-w-sm" onClick={(event) => event.stopPropagation()}>
