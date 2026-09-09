@@ -6,10 +6,10 @@ export const site = {
   url: "rui-mendes.vercel.app",
   location: "Felgueiras, Porto",
   photo: "/assets/rui.jpg",
-  role: "Data Science & Engineering · FEUP",
+  role: "Master in Data Science and Engineering at FEUP",
   available: "Open to work",
   about:
-    "I ship web products people can open — a poetry social app, restaurant and festival systems, catalogues and staff panels. Built with the stack I use every day: TypeScript, React, Next.js, SQL and Supabase.",
+    "Bachelor’s in Information Systems Engineering and Management at the University of Minho (150/200), combining software engineering with business. Internships as a full-stack developer (Laravel, Node.js, JavaScript) and as a technology consultant.",
   fact: "Felgueiras · FEUP · UMinho",
   social: {
     linkedin: "https://www.linkedin.com/in/ruimiguelmendes",

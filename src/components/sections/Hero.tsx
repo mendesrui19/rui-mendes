@@ -80,8 +80,17 @@ export default function Hero({ showApp }: HeroProps) {
             <motion.p
               initial={false}
               animate={startAnim ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-              transition={{ duration: 0.55, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-5 max-w-[32rem] text-[15px] leading-[1.85]"
+              transition={{ duration: 0.5, delay: 0.04, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-4 text-[15px] text-[var(--text-muted)]"
+            >
+              {site.role}
+            </motion.p>
+
+            <motion.p
+              initial={false}
+              animate={startAnim ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+              transition={{ duration: 0.55, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-4 max-w-[32rem] text-[15px] leading-[1.8]"
               style={{ color: "var(--text-secondary)" }}
             >
               {site.about}
