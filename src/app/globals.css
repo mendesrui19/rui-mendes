@@ -148,58 +148,77 @@ button.surface:hover {
 
 .field {
   display: grid;
-  gap: 8px;
+  gap: 6px;
 }
 
 .field-label {
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  color: var(--text-muted);
-}
-
-.field-box {
-  position: relative;
-}
-
-.field-box > svg {
-  position: absolute;
-  left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-muted);
-  pointer-events: none;
-}
-
-.field-box.area > svg {
-  top: 18px;
-  transform: none;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--text-secondary);
 }
 
 .field-input,
 .field-area {
   width: 100%;
-  border: 1px solid var(--border);
-  background: color-mix(in oklch, var(--bg-primary) 72%, black);
+  border: 1px solid color-mix(in oklch, var(--border) 80%, transparent);
+  background: color-mix(in oklch, var(--bg-card-up) 55%, var(--bg-primary));
   color: var(--text-primary);
-  border-radius: 16px;
+  border-radius: var(--r);
   outline: none;
+  transition:
+    border-color var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out),
+    background var(--dur-base) var(--ease-out);
+}
+
+.field-input::placeholder,
+.field-area::placeholder {
+  color: color-mix(in oklch, var(--text-muted) 70%, transparent);
 }
 
 .field-input {
-  height: 52px;
-  padding: 0 16px 0 46px;
+  height: 44px;
+  padding: 0 14px;
 }
 
 .field-area {
-  min-height: 128px;
-  padding: 16px 16px 16px 46px;
-  resize: none;
+  min-height: 120px;
+  padding: 12px 14px;
+  resize: vertical;
+}
+
+.field-input:hover,
+.field-area:hover {
+  border-color: color-mix(in oklch, var(--text-muted) 45%, var(--border));
 }
 
 .field-input:focus,
 .field-area:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px color-mix(in oklch, var(--accent) 20%, transparent);
+  background: var(--bg-card-up);
+  border-color: color-mix(in oklch, var(--accent) 55%, var(--border));
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--accent) 12%, transparent);
+}
+
+.file-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 44px;
+  padding: 10px 14px;
+  border-radius: var(--r);
+  border: 1px dashed color-mix(in oklch, var(--border) 90%, transparent);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 13px;
+  cursor: pointer;
+  transition: border-color var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out);
+}
+
+.file-field:hover {
+  border-color: color-mix(in oklch, var(--accent) 40%, var(--border));
+  color: var(--text-secondary);
 }
 
 .btn-primary {
@@ -207,9 +226,9 @@ button.surface:hover {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  height: 48px;
-  padding: 0 20px;
-  border-radius: 14px;
+  height: 44px;
+  padding: 0 18px;
+  border-radius: var(--r);
   border: 1px solid var(--accent);
   background: var(--accent);
   color: var(--accent-ink);
@@ -256,12 +275,9 @@ button.surface:hover {
 }
 
 .contact-panel {
-  background:
-    linear-gradient(165deg, color-mix(in oklch, var(--accent) 10%, var(--bg-card)) 0%, var(--bg-card) 42%);
-  border: 1px solid color-mix(in oklch, var(--accent) 32%, var(--border));
-  box-shadow:
-    0 1px 0 oklch(100% 0 0 / 0.05),
-    0 18px 48px oklch(0% 0 0 / 0.22);
+  background: var(--bg-card);
+  border: 1px solid color-mix(in oklch, var(--accent) 18%, var(--border));
+  box-shadow: 0 1px 0 oklch(100% 0 0 / 0.05);
 }
 
 .comment-panel {
@@ -346,9 +362,9 @@ button.surface:hover {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  height: 48px;
-  padding: 0 20px;
-  border-radius: 14px;
+  height: 44px;
+  padding: 0 18px;
+  border-radius: var(--r);
   border: 1px solid color-mix(in oklch, var(--accent) 45%, transparent);
   background: transparent;
   color: var(--text-primary);
@@ -380,8 +396,8 @@ button.surface:hover {
   justify-content: center;
   gap: 8px;
   width: 100%;
-  height: 48px;
-  border-radius: 14px;
+  height: 44px;
+  border-radius: var(--r);
   border: 1px solid color-mix(in oklch, var(--accent) 32%, transparent);
   background: color-mix(in oklch, var(--accent) 14%, transparent);
   color: var(--text-primary);

@@ -115,9 +115,9 @@ export default function CommentsSection() {
   };
 
   return (
-    <div className="comment-panel flex h-full min-w-0 flex-col rounded-[28px] p-6 md:p-8">
+    <div className="comment-panel flex h-full min-w-0 flex-col rounded-2xl p-6 md:p-7">
       <div className="mb-6">
-        <h3 className="mb-1 text-xl font-semibold md:text-2xl">Comments</h3>
+        <h3 className="mb-1 text-xl font-semibold tracking-[-0.02em] md:text-2xl">Comments</h3>
         <p className="text-sm text-[var(--text-muted)]">Public notes from people who visit the site</p>
       </div>
 
@@ -135,12 +135,11 @@ export default function CommentsSection() {
           <span className="field-label">Name</span>
           <input
             required
+            autoComplete="name"
             maxLength={40}
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Your name"
             className="field-input"
-            style={{ paddingLeft: 16 }}
           />
         </label>
         <label className="field">
@@ -151,26 +150,24 @@ export default function CommentsSection() {
             rows={3}
             value={comment}
             onChange={(e) => setComment(e.target.value)}
-            placeholder="Write your comment..."
             className="field-area"
-            style={{ paddingLeft: 16, minHeight: 96 }}
+            style={{ minHeight: 96 }}
           />
         </label>
-        <label className="social-row cursor-pointer">
-          <span className="flex items-center gap-3 text-sm text-[var(--text-secondary)]">
-            <span className="social-chip">
-              <Upload size={14} />
-            </span>
-            {image ? image.name : "Upload Image"}
+        <label className="file-field">
+          <span className="flex min-w-0 items-center gap-2">
+            <Upload size={14} />
+            <span className="truncate">{image ? image.name : "Attach image"}</span>
           </span>
-          <input hidden type="file" accept="image/*" onChange={handleImage} />
+          <span className="shrink-0 text-[11px] tracking-normal text-[var(--text-muted)]">Optional · 1 MB</span>
+          <input hidden type="file" accept="image/jpeg,image/png,image/webp,image/gif" onChange={handleImage} />
         </label>
 
         {preview && (
           <img
             src={preview}
             alt="Preview"
-            className="h-36 w-full rounded-2xl border border-white/10 object-cover"
+            className="h-32 w-full rounded-[var(--r)] border border-[var(--border)] object-cover"
           />
         )}
 
@@ -180,7 +177,7 @@ export default function CommentsSection() {
         {error && <p className="text-sm text-red-300/80">{error}</p>}
       </form>
 
-      <div className="custom-scroll comment-feed min-h-[160px] flex-1 overflow-y-auto rounded-[20px] p-3">
+      <div className="custom-scroll comment-feed min-h-[160px] flex-1 overflow-y-auto rounded-[var(--r-lg)] p-3">
         {loading ? (
           <p className="px-3 py-8 text-center text-[13px] text-[var(--text-muted)]">Loading notes...</p>
         ) : comments.length === 0 ? (
@@ -190,7 +187,7 @@ export default function CommentsSection() {
             {comments.map((item) => (
               <div
                 key={item.id}
-                className={`comment-card rounded-[18px] p-4 ${item.is_pinned ? "is-pinned" : ""}`}
+                className={`comment-card rounded-[var(--r)] p-4 ${item.is_pinned ? "is-pinned" : ""}`}
               >
                 <div className="flex gap-3">
                   <div className="comment-avatar flex size-10 shrink-0 items-center justify-center rounded-full text-xs font-semibold">

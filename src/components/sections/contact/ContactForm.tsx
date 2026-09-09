@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Send, User, Mail, MessageSquare, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { FaLinkedinIn, FaGithub } from "react-icons/fa";
 import { site } from "@/data/site";
 
@@ -45,13 +45,13 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="contact-panel flex h-full min-w-0 flex-col rounded-[28px] p-6 md:p-8">
-      <h2 className="mb-2 text-2xl font-bold md:text-3xl">Write to me</h2>
-      <p className="mb-8 text-sm leading-relaxed text-[var(--text-secondary)]">
+    <div className="contact-panel flex h-full min-w-0 flex-col rounded-2xl p-6 md:p-7">
+      <h2 className="mb-1 text-xl font-semibold tracking-[-0.02em] md:text-2xl">Write to me</h2>
+      <p className="mb-7 text-sm leading-relaxed text-[var(--text-muted)]">
         Collaborations, ideas or just a hello. I usually reply on LinkedIn.
       </p>
 
-      <form className="grid gap-5" onSubmit={handleSubmit}>
+      <form className="grid gap-4" onSubmit={handleSubmit}>
         <label className="sr-only" aria-hidden="true">
           Website
           <input
@@ -63,51 +63,40 @@ export default function ContactForm() {
         </label>
         <label className="field">
           <span className="field-label">Name</span>
-          <span className="field-box">
-            <User size={16} />
-            <input
-              required
-              maxLength={80}
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Your name"
-              className="field-input"
-            />
-          </span>
+          <input
+            required
+            autoComplete="name"
+            maxLength={80}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="field-input"
+          />
         </label>
         <label className="field">
           <span className="field-label">Email</span>
-          <span className="field-box">
-            <Mail size={16} />
-            <input
-              required
-              type="email"
-              maxLength={120}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="hello@email.com"
-              className="field-input"
-            />
-          </span>
+          <input
+            required
+            type="email"
+            autoComplete="email"
+            maxLength={120}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="field-input"
+          />
         </label>
         <label className="field">
           <span className="field-label">Message</span>
-          <span className="field-box area">
-            <MessageSquare size={16} />
-            <textarea
-              required
-              maxLength={2000}
-              rows={5}
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder="Write your message..."
-              className="field-area"
-            />
-          </span>
+          <textarea
+            required
+            maxLength={2000}
+            rows={5}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            className="field-area"
+          />
         </label>
-        <button type="submit" className="btn-primary w-full" disabled={status === "sending"}>
-          <Send size={16} />
-          {status === "sending" ? "Sending..." : "Send message"}
+        <button type="submit" className="btn-primary mt-1 w-full" disabled={status === "sending"}>
+          {status === "sending" ? "Sending…" : "Send message"}
         </button>
         {status === "sent" && (
           <p className="text-sm text-[var(--accent)]">Message sent. I’ll get back to you soon.</p>
