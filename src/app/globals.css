@@ -199,6 +199,7 @@ button.surface:hover {
 .field-input:focus,
 .field-area:focus {
   border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--accent) 20%, transparent);
 }
 
 .btn-primary {
@@ -215,6 +216,103 @@ button.surface:hover {
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
+  transition: filter var(--dur-base) var(--ease-out);
+}
+
+.btn-primary:hover {
+  filter: brightness(1.07);
+}
+
+.btn-primary:disabled {
+  opacity: 0.55;
+  cursor: wait;
+  filter: none;
+}
+
+.contact-stage {
+  position: relative;
+}
+
+.contact-stage::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: -12%;
+  height: 46%;
+  background: radial-gradient(ellipse at 50% 0%, color-mix(in oklch, var(--accent) 22%, transparent), transparent 70%);
+}
+
+.contact-kicker {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 12px;
+  font-family: var(--font-dm-mono), ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+}
+
+.contact-panel {
+  background:
+    linear-gradient(165deg, color-mix(in oklch, var(--accent) 10%, var(--bg-card)) 0%, var(--bg-card) 42%);
+  border: 1px solid color-mix(in oklch, var(--accent) 32%, var(--border));
+  box-shadow:
+    0 1px 0 oklch(100% 0 0 / 0.05),
+    0 18px 48px oklch(0% 0 0 / 0.22);
+}
+
+.comment-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 0 oklch(100% 0 0 / 0.04);
+}
+
+.comment-feed {
+  border: 1px solid color-mix(in oklch, var(--accent) 14%, var(--border));
+  background: color-mix(in oklch, var(--bg-primary) 55%, black);
+}
+
+.comment-card {
+  border: 1px solid var(--border);
+  background: color-mix(in oklch, var(--bg-card-up) 70%, transparent);
+}
+
+.comment-card.is-pinned {
+  border-color: color-mix(in oklch, var(--accent) 40%, var(--border));
+  background: color-mix(in oklch, var(--accent) 8%, var(--bg-card));
+}
+
+.comment-avatar {
+  background: color-mix(in oklch, var(--accent) 18%, transparent);
+  color: var(--accent);
+}
+
+.like-btn {
+  color: var(--text-muted);
+}
+
+.like-btn:hover {
+  color: var(--accent);
+}
+
+.social-chip {
+  display: flex;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: color-mix(in oklch, var(--accent) 16%, transparent);
+  color: var(--accent);
+}
+
+.btn-soft:hover:not(:disabled) {
+  background: color-mix(in oklch, var(--accent) 22%, transparent);
+  border-color: color-mix(in oklch, var(--accent) 48%, transparent);
 }
 
 .btn-ghost {

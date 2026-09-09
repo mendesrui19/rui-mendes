@@ -115,7 +115,7 @@ export default function CommentsSection() {
   };
 
   return (
-    <div className="surface flex h-full min-w-0 flex-col rounded-[28px] p-6 md:p-8">
+    <div className="comment-panel flex h-full min-w-0 flex-col rounded-[28px] p-6 md:p-8">
       <div className="mb-6">
         <h3 className="mb-1 text-xl font-semibold md:text-2xl">Comments</h3>
         <p className="text-sm text-[var(--text-muted)]">Public notes from people who visit the site</p>
@@ -157,8 +157,10 @@ export default function CommentsSection() {
           />
         </label>
         <label className="social-row cursor-pointer">
-          <span className="flex items-center gap-3 text-sm text-white/70">
-            <Upload size={16} />
+          <span className="flex items-center gap-3 text-sm text-[var(--text-secondary)]">
+            <span className="social-chip">
+              <Upload size={14} />
+            </span>
             {image ? image.name : "Upload Image"}
           </span>
           <input hidden type="file" accept="image/*" onChange={handleImage} />
@@ -178,47 +180,45 @@ export default function CommentsSection() {
         {error && <p className="text-sm text-red-300/80">{error}</p>}
       </form>
 
-      <div className="custom-scroll min-h-[160px] flex-1 overflow-y-auto rounded-[20px] border border-white/10 bg-black/20 p-3">
+      <div className="custom-scroll comment-feed min-h-[160px] flex-1 overflow-y-auto rounded-[20px] p-3">
         {loading ? (
-          <p className="px-3 py-8 text-center text-[13px] text-white/40">Loading notes...</p>
+          <p className="px-3 py-8 text-center text-[13px] text-[var(--text-muted)]">Loading notes...</p>
         ) : comments.length === 0 ? (
-          <p className="px-3 py-8 text-center text-[13px] text-white/40">No notes yet.</p>
+          <p className="px-3 py-8 text-center text-[13px] text-[var(--text-muted)]">No notes yet.</p>
         ) : (
           <div className="grid gap-3">
             {comments.map((item) => (
               <div
                 key={item.id}
-                className={`rounded-[18px] border p-4 ${
-                  item.is_pinned ? "border-white/25 bg-white/5" : "border-white/10 bg-white/[0.03]"
-                }`}
+                className={`comment-card rounded-[18px] p-4 ${item.is_pinned ? "is-pinned" : ""}`}
               >
                 <div className="flex gap-3">
-                  <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white/10 text-xs font-semibold">
+                  <div className="comment-avatar flex size-10 shrink-0 items-center justify-center rounded-full text-xs font-semibold">
                     {item.name?.charAt(0)}
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="mb-1 flex flex-wrap items-center gap-2">
                       <p className="text-sm font-medium">{item.name}</p>
                       {item.is_pinned && (
-                        <div className="flex items-center gap-1 rounded-full border border-white/15 bg-white/10 px-2 py-[3px] text-[10px] text-white/70">
+                        <div className="flex items-center gap-1 rounded-full border border-[color-mix(in_oklch,var(--accent)_35%,transparent)] bg-[color-mix(in_oklch,var(--accent)_12%,transparent)] px-2 py-[3px] text-[10px] text-[var(--accent)]">
                           <Pin size={10} />
                           PINNED
                         </div>
                       )}
                     </div>
-                    <p className="text-[13px] leading-relaxed text-white/55">{item.comment}</p>
+                    <p className="text-[13px] leading-relaxed text-[var(--text-secondary)]">{item.comment}</p>
                     {item.image_url && (
                       <img
                         src={item.image_url}
                         alt="Comment"
-                        className="mt-3 max-h-48 w-full rounded-xl border border-white/10 object-cover"
+                        className="mt-3 max-h-48 w-full rounded-xl border border-[var(--border)] object-cover"
                       />
                     )}
                   </div>
                   <button
                     type="button"
                     onClick={() => void handleLike(item.id)}
-                    className="flex h-fit items-center gap-1 text-[11px] text-white/40 transition-colors hover:text-white"
+                    className="like-btn flex h-fit items-center gap-1 text-[11px] transition-colors"
                   >
                     <Heart size={13} />
                     {item.likes || 0}

@@ -45,7 +45,7 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="surface flex h-full min-w-0 flex-col rounded-[28px] p-6 md:p-8">
+    <div className="contact-panel flex h-full min-w-0 flex-col rounded-[28px] p-6 md:p-8">
       <h2 className="mb-2 text-2xl font-bold md:text-3xl">Write to me</h2>
       <p className="mb-8 text-sm leading-relaxed text-[var(--text-secondary)]">
         Collaborations, ideas or just a hello. I usually reply on LinkedIn.
@@ -105,39 +105,43 @@ export default function ContactForm() {
             />
           </span>
         </label>
-        <button type="submit" className="btn-soft" disabled={status === "sending"}>
+        <button type="submit" className="btn-primary w-full" disabled={status === "sending"}>
           <Send size={16} />
           {status === "sending" ? "Sending..." : "Send message"}
         </button>
         {status === "sent" && (
-          <p className="text-sm text-emerald-300/80">Message sent. I’ll get back to you soon.</p>
+          <p className="text-sm text-[var(--accent)]">Message sent. I’ll get back to you soon.</p>
         )}
         {status === "error" && <p className="text-sm text-red-300/80">{error}</p>}
       </form>
 
-      <div className="mt-8 border-t border-white/10 pt-6">
-        <p className="mb-4 text-sm text-white/55">Links</p>
+      <div className="mt-8 border-t border-[color-mix(in_oklch,var(--accent)_22%,transparent)] pt-6">
+        <p className="mb-4 text-sm text-[var(--text-muted)]">Links</p>
         <a href={site.social.linkedin} target="_blank" rel="noopener noreferrer" className="social-row mb-3">
           <span className="flex min-w-0 items-center gap-3">
-            <FaLinkedinIn />
+            <span className="social-chip">
+              <FaLinkedinIn />
+            </span>
             <span>
               <span className="block text-sm font-medium">LinkedIn</span>
-              <span className="block text-xs text-white/40">/in/ruimiguelmendes</span>
+              <span className="block text-xs text-[var(--text-muted)]">/in/ruimiguelmendes</span>
             </span>
           </span>
-          <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-white/10">
+          <span className="social-chip">
             <ArrowUpRight size={14} />
           </span>
         </a>
         <a href={site.social.github} target="_blank" rel="noopener noreferrer" className="social-row">
           <span className="flex min-w-0 items-center gap-3">
-            <FaGithub />
+            <span className="social-chip">
+              <FaGithub />
+            </span>
             <span>
               <span className="block text-sm font-medium">GitHub</span>
-              <span className="block text-xs text-white/40">@mendesrui19</span>
+              <span className="block text-xs text-[var(--text-muted)]">@mendesrui19</span>
             </span>
           </span>
-          <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-white/10">
+          <span className="social-chip">
             <ArrowUpRight size={14} />
           </span>
         </a>
