@@ -1,39 +1,31 @@
 "use client";
 
+import { Code2, Globe, User } from "lucide-react";
 import { site } from "@/data/site";
+
+const icons = [Code2, User, Globe];
 
 export default function WelcomeScreen() {
   return (
-    <div
-      className="flex h-dvh w-full items-center justify-center px-5"
-      style={{ background: "var(--bg-primary)" }}
-    >
-      <div className="flex w-full max-w-sm flex-col items-center gap-5 text-center">
-        <img
-          src={site.photo}
-          alt=""
-          className="size-20 rounded-full object-cover object-[center_18%] ring-2 ring-[var(--accent)]"
-        />
-        <div>
-          <p className="text-[clamp(18px,3vw,28px)] font-extrabold tracking-[-0.04em]">
-            Hi, I’m Rui
-          </p>
-          <h1
-            className="m-0 text-[clamp(16px,2.6vw,22px)] font-medium tracking-[-0.02em]"
-            style={{ color: "var(--accent)" }}
-          >
-            {site.role}
-          </h1>
+    <div className="welcome-screen flex h-dvh w-full items-center justify-center bg-[var(--bg-primary)] px-6">
+      <div className="flex flex-col items-center text-center">
+        <div className="welcome-rise mb-10 flex items-center gap-3">
+          {icons.map((Icon, index) => (
+            <span key={index} className="welcome-icon">
+              <Icon size={16} strokeWidth={1.6} />
+            </span>
+          ))}
         </div>
-        <div
-          className="rounded-full px-3.5 py-1.5 font-[family-name:var(--font-dm-mono)] text-[12px] tracking-[0.12em]"
-          style={{
-            border: "1px solid var(--border)",
-            color: "var(--text-muted)",
-          }}
-        >
-          {site.location}
-        </div>
+
+        <h1 className="welcome-rise welcome-rise-2 m-0 text-[clamp(2.5rem,8.2vw,5.1rem)] font-extrabold leading-[1.02] tracking-[-0.045em] text-white">
+          Welcome to my
+          <br />
+          Portfolio Website
+        </h1>
+
+        <p className="welcome-rise welcome-rise-3 mt-10 mb-0 rounded-full border border-white/12 bg-white/[0.04] px-4 py-2 font-[family-name:var(--font-dm-mono)] text-[12px] tracking-[0.04em] text-white/65">
+          {site.url}
+        </p>
       </div>
     </div>
   );

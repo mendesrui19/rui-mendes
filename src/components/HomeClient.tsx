@@ -13,14 +13,16 @@ import WelcomeScreen from "@/components/WelcomeScreen";
 import { hasPlayedIntro, setIntroPlayed } from "@/lib/introState";
 
 export default function HomeClient() {
-  const [showWelcome, setShowWelcome] = useState(false);
-  const [showApp, setShowApp] = useState(true);
+  const [showWelcome, setShowWelcome] = useState(true);
+  const [showApp, setShowApp] = useState(false);
+  const [skipExit, setSkipExit] = useState(false);
 
   useEffect(() => {
     const currentHash = window.location.hash;
     const pathname = window.location.pathname;
 
     if (currentHash === "#portfolio") {
+      setSkipExit(true);
       setShowWelcome(false);
       setShowApp(true);
       return;
@@ -53,11 +55,12 @@ export default function HomeClient() {
         setShowWelcome(false);
         setShowApp(true);
         setIntroPlayed();
-      }, 2800);
+      }, 4200);
 
       return () => clearTimeout(timer);
     }
 
+    setSkipExit(true);
     setShowWelcome(false);
     setShowApp(true);
   }, []);
@@ -86,7 +89,7 @@ export default function HomeClient() {
               }
             }}
             transition={{
-              duration: 1.2,
+              duration: skipExit ? 0 : 1.2,
               ease: [0.76, 0, 0.24, 1],
             }}
             className="fixed inset-0 z-[9999]"

@@ -248,6 +248,41 @@ button.surface:hover {
   filter: none;
 }
 
+.welcome-icon {
+  display: flex;
+  width: 2.75rem;
+  height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid oklch(100% 0 0 / 0.14);
+  background: oklch(100% 0 0 / 0.04);
+  color: white;
+}
+
+.welcome-rise {
+  animation: welcome-rise 800ms var(--ease-out) both;
+}
+
+.welcome-rise-2 {
+  animation-delay: 70ms;
+}
+
+.welcome-rise-3 {
+  animation-delay: 140ms;
+}
+
+@keyframes welcome-rise {
+  from {
+    opacity: 0.35;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .contact-stage {
   position: relative;
 }

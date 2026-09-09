@@ -3,6 +3,7 @@ export const site = {
   firstName: "Rui",
   lastName: "Mendes",
   handle: "rui.dev",
+  url: "rui-mendes.vercel.app",
   location: "Felgueiras, Porto",
   photo: "/assets/rui.jpg",
   role: "Data Science & Engineering · FEUP",
