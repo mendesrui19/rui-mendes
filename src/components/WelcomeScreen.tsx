@@ -17,12 +17,11 @@ export default function WelcomeScreen() {
           ))}
         </div>
 
-        <h1 className="welcome-rise welcome-rise-2 m-0 text-[clamp(2.6rem,8vw,5.2rem)] font-extrabold leading-[1.02] tracking-[-0.045em] text-white">
-          Hello, I’m Rui
+        <h1 className="welcome-rise welcome-rise-2 m-0 text-[clamp(2.5rem,8.2vw,5.1rem)] font-extrabold leading-[1.02] tracking-[-0.045em] text-white">
+          Welcome to my
+          <br />
+          Portfolio Website
         </h1>
-        <p className="welcome-rise welcome-rise-2 mt-4 mb-0 text-[clamp(1.05rem,2.4vw,1.55rem)] font-medium tracking-[-0.02em] text-[var(--text-secondary)]">
-          Data Science & Engineering
-        </p>
 
         <p className="welcome-rise welcome-rise-3 mt-10 mb-0 rounded-full border border-white/12 bg-white/[0.04] px-4 py-2 font-[family-name:var(--font-dm-mono)] text-[12px] tracking-[0.04em] text-white/65">
           {site.url}
