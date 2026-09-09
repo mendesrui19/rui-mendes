@@ -1,5 +1,7 @@
 # Rui Mendes
 
+Live: [rui-mendes.vercel.app](https://rui-mendes.vercel.app)
+
 Portfolio site for Rui Mendes — Master’s in Data Science and Engineering at FEUP.
 
 Built with Next.js. Contact messages and public comments go to Supabase.
