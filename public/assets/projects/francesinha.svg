@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" fill="none">
+  <rect width="800" height="500" fill="#3a1410"/>
+  <rect x="0" y="380" width="800" height="120" fill="#c45c28"/>
+  <text x="80" y="160" fill="#f3c9a3" font-family="ui-sans-serif, system-ui" font-size="20" letter-spacing="10">FESTIVAL</text>
+  <text x="80" y="250" fill="#fff4ea" font-family="ui-sans-serif, system-ui" font-size="54" font-weight="800">Francesinha</text>
+  <text x="80" y="310" fill="#ffc8a8" font-family="ui-sans-serif, system-ui" font-size="22">event and identity</text>
+</svg>

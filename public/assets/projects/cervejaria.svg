@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" fill="none">
+  <rect width="800" height="500" fill="#2a1810"/>
+  <circle cx="620" cy="160" r="110" fill="#e07a3a"/>
+  <rect x="90" y="90" width="280" height="320" rx="24" fill="#3a2418" stroke="#f0c090" stroke-width="2"/>
+  <text x="118" y="170" fill="#f0c090" font-family="ui-sans-serif, system-ui" font-size="18" letter-spacing="8">56</text>
+  <text x="118" y="240" fill="#fff6ee" font-family="ui-sans-serif, system-ui" font-size="36" font-weight="700">Cervejaria</text>
+  <text x="118" y="290" fill="#f0c090" font-family="ui-sans-serif, system-ui" font-size="20">Hamburgueria</text>
+  <text x="118" y="360" fill="#fff6ee" font-family="ui-monospace, monospace" font-size="16">painel 5656</text>
+</svg>

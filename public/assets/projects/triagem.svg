@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" fill="none">
+  <rect width="800" height="500" fill="#101816"/>
+  <rect x="90" y="110" width="180" height="12" rx="6" fill="#c5e08a"/>
+  <rect x="90" y="150" width="420" height="12" rx="6" fill="#c5e08a" fill-opacity="0.35"/>
+  <rect x="90" y="190" width="320" height="12" rx="6" fill="#c5e08a" fill-opacity="0.2"/>
+  <text x="90" y="280" fill="#f4f1e8" font-family="ui-sans-serif, system-ui" font-size="36" font-weight="700">Triagem SNS24</text>
+  <text x="90" y="330" fill="#9bb89a" font-family="ui-monospace, monospace" font-size="16">TIA + SIAD · Prolog</text>
+</svg>

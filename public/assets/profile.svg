@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480">
+  <defs>
+    <radialGradient id="g" cx="38%" cy="28%" r="80%">
+      <stop offset="0%" stop-color="#2c2c2c"/>
+      <stop offset="100%" stop-color="#0a0a0a"/>
+    </radialGradient>
+  </defs>
+  <rect width="480" height="480" fill="url(#g)"/>
+  <circle cx="240" cy="200" r="92" fill="#161616" stroke="#3a3a3a" stroke-width="2"/>
+  <text x="240" y="230" text-anchor="middle" font-size="92">👨‍💻</text>
+  <text x="240" y="340" text-anchor="middle" font-family="Syne, sans-serif" font-size="42" font-weight="800" fill="#f0f0f0">RM</text>
+  <text x="240" y="378" text-anchor="middle" font-size="22">✨</text>
+</svg>
