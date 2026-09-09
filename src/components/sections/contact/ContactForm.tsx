@@ -47,7 +47,7 @@ export default function ContactForm() {
   return (
     <div className="surface flex h-full min-w-0 flex-col rounded-[28px] p-6 md:p-8">
       <h2 className="mb-2 text-2xl font-bold md:text-3xl">Write to me</h2>
-      <p className="mb-8 text-sm leading-relaxed text-white/50">
+      <p className="mb-8 text-sm leading-relaxed text-[var(--text-secondary)]">
         Collaborations, ideas or just a hello. I usually reply on LinkedIn.
       </p>
 

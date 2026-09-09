@@ -51,13 +51,13 @@ export default function PortfolioCard({ project, featured = false }: Props) {
       </div>
 
       <div className={`flex flex-1 flex-col p-5 ${featured ? "md:p-8" : ""}`}>
-        <p className="mb-2 font-[family-name:var(--font-dm-mono)] text-[11px] tracking-[0.16em] text-white/40">
+        <p className="mb-2 font-[family-name:var(--font-dm-mono)] text-[11px] tracking-[0.16em] text-[var(--text-muted)]">
           {project.category}
         </p>
         <h3 className={`mb-2 font-semibold leading-tight ${featured ? "text-[28px]" : "text-[17px]"}`}>
           {project.title}
         </h3>
-        <p className="line-clamp-3 text-[13px] leading-relaxed text-white/60">{project.description}</p>
+        <p className="line-clamp-3 text-[13px] leading-relaxed text-[var(--text-secondary)]">{project.description}</p>
 
         {primaryCode ? (
           <div className="mt-4 max-w-sm" onClick={(event) => event.stopPropagation()}>
@@ -84,13 +84,13 @@ export default function PortfolioCard({ project, featured = false }: Props) {
               target="_blank"
               rel="noopener noreferrer"
               onClick={(event) => event.stopPropagation()}
-              className="inline-flex items-center gap-1.5 text-[13px] text-white/55 no-underline hover:text-white"
+              className="inline-flex items-center gap-1.5 text-[13px] text-[var(--text-muted)] no-underline hover:text-white"
             >
               GitHub
               <ArrowUpRight size={14} />
             </a>
           ) : null}
-          <span className="ml-auto text-[12px] text-white/35">Details →</span>
+          <span className="ml-auto text-[12px] text-[var(--text-muted)]">Details →</span>
         </div>
       </div>
     </article>

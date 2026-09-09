@@ -61,8 +61,7 @@ export default function Hero({ showApp }: HeroProps) {
               initial={false}
               animate={startAnim ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="mb-4 font-[family-name:var(--font-dm-mono)] text-[12px] tracking-[0.2em]"
-              style={{ color: "var(--text-muted)" }}
+              className="status-pill mb-4 font-[family-name:var(--font-dm-mono)] text-[12px] tracking-[0.2em]"
             >
               {site.available.toUpperCase()}
             </motion.p>

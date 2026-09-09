@@ -118,7 +118,7 @@ export default function CommentsSection() {
     <div className="surface flex h-full min-w-0 flex-col rounded-[28px] p-6 md:p-8">
       <div className="mb-6">
         <h3 className="mb-1 text-xl font-semibold md:text-2xl">Comments</h3>
-        <p className="text-sm text-white/40">Public notes from people who visit the site</p>
+        <p className="text-sm text-[var(--text-muted)]">Public notes from people who visit the site</p>
       </div>
 
       <form className="mb-6 grid gap-4" onSubmit={handleSubmit}>

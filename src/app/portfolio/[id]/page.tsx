@@ -62,13 +62,13 @@ export default function PortfolioDetailPage() {
           Work
         </button>
 
-        <p className="mb-3 font-[family-name:var(--font-dm-mono)] text-[12px] tracking-[0.18em] text-white/40">
+        <p className="mb-3 font-[family-name:var(--font-dm-mono)] text-[12px] tracking-[0.18em] text-[var(--text-muted)]">
           {project.category}
         </p>
         <h1 className="mb-4 max-w-[34rem] text-[clamp(1.8rem,4vw,2.8rem)] font-bold leading-[1.05] tracking-tight">
           {project.title}
         </h1>
-        <p className="mb-6 max-w-[36rem] text-[15px] leading-[1.8] text-white/65">{project.description}</p>
+        <p className="mb-6 max-w-[36rem] text-[15px] leading-[1.8] text-[var(--text-secondary)]">{project.description}</p>
 
         <div className="mb-8 flex flex-wrap gap-3">
           {project.live_url ? (
@@ -108,8 +108,8 @@ export default function PortfolioDetailPage() {
                 onKeyDown={(event) => onPaneKey(event, index)}
                 className={`flex-1 rounded-full py-2.5 text-sm transition-colors duration-200 ${
                   pane === item.id
-                    ? "bg-[var(--accent)] text-[oklch(16%_0.04_152)]"
-                    : "text-white/50 hover:text-white"
+                    ? "bg-[var(--accent)] text-[var(--accent-ink)]"
+                    : "text-[var(--text-muted)] hover:text-white"
                 }`}
               >
                 {item.label}
@@ -117,7 +117,7 @@ export default function PortfolioDetailPage() {
             ))}
           </div>
         </div>
-        <p className="mb-8 text-[12px] text-white/40">The grid below switches. Nothing is tucked under a long scroll.</p>
+        <p className="mb-8 text-[12px] text-[var(--text-muted)]">The grid below switches. Nothing is tucked under a long scroll.</p>
 
         {pane === "look" ? (
           <div className="grid gap-10 lg:grid-cols-[1fr_0.9fr] lg:items-start">

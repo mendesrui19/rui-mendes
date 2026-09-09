@@ -42,8 +42,8 @@ export default function Navbar() {
         className="nav-pill"
         style={{
           background: scrolled
-            ? "oklch(13.5% 0.028 152 / 0.92)"
-            : "oklch(13.5% 0.028 152 / 0.7)",
+            ? "color-mix(in oklch, var(--bg-primary) 92%, transparent)"
+            : "color-mix(in oklch, var(--bg-primary) 78%, transparent)",
         }}
       >
         <span

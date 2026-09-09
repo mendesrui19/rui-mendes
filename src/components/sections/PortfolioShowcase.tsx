@@ -20,11 +20,11 @@ export default function PortfolioShowcase() {
   return (
     <section id="portfolio" className="page-shell section text-white">
       <div className="mb-10 max-w-2xl">
-        <p className="mb-3 font-[family-name:var(--font-dm-mono)] text-[12px] tracking-[0.2em] text-white/40">
+        <p className="mb-3 font-[family-name:var(--font-dm-mono)] text-[12px] tracking-[0.2em] text-[var(--text-muted)]">
           WORK
         </p>
         <h2 className="mb-4 text-3xl font-bold tracking-[-0.03em] md:text-5xl">Real projects</h2>
-        <p className="text-sm leading-relaxed text-white/55 md:text-base">
+        <p className="text-sm leading-relaxed text-[var(--text-secondary)] md:text-base">
           Repos, live sites and access notes. Nothing invented — everything here exists on GitHub or in production.
         </p>
       </div>
@@ -44,8 +44,8 @@ export default function PortfolioShowcase() {
               onClick={() => setActiveTab(tab)}
               className={`flex-1 rounded-full py-2.5 text-sm transition-colors duration-200 ${
                 activeTab === tab
-                  ? "bg-[var(--accent)] text-[oklch(16%_0.04_152)]"
-                  : "text-white/50 hover:text-white"
+                  ? "bg-[var(--accent)] text-[var(--accent-ink)]"
+                  : "text-[var(--text-muted)] hover:text-white"
               }`}
             >
               {label}
@@ -64,8 +64,8 @@ export default function PortfolioShowcase() {
                 onClick={() => setFilter(item)}
                 className={`rounded-full px-3.5 py-1.5 text-[12px] tracking-[0.04em] ${
                   filter === item
-                    ? "bg-white text-[oklch(16%_0.04_152)]"
-                    : "border border-white/10 text-white/55 hover:text-white"
+                    ? "bg-white text-[var(--accent-ink)]"
+                    : "border border-white/15 text-[var(--text-muted)] hover:text-white"
                 }`}
               >
                 {item}

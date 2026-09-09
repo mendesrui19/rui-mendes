@@ -9,7 +9,7 @@ export default function ContactSection() {
     <section id="contact" className="page-shell section text-white">
       <div className="mb-14 text-center">
         <h2 className="mb-4 text-3xl font-bold tracking-[-0.03em] md:text-5xl">Contact</h2>
-        <p className="mx-auto max-w-xl text-sm leading-relaxed text-white/60 md:text-base">
+        <p className="mx-auto max-w-xl text-sm leading-relaxed text-[var(--text-secondary)] md:text-base">
           Have a project in mind? Send a message and we’ll talk.
         </p>
       </div>
