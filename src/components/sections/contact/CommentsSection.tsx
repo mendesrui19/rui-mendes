@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Upload, Heart, Pin } from "lucide-react";
 
 type Comment = {
@@ -29,7 +30,10 @@ export default function CommentsSection() {
     const load = async () => {
       try {
         const response = await fetch("/api/guestbook");
-        const data = (await response.json()) as { notes?: Comment[]; error?: string };
+        const data = (await response.json()) as {
+          notes?: Comment[];
+          error?: string;
+        };
         if (!response.ok) {
           if (!cancelled) setError(data.error || "Could not load comments.");
           return;
@@ -71,8 +75,14 @@ export default function CommentsSection() {
     if (image) form.set("image", image);
 
     try {
-      const response = await fetch("/api/guestbook", { method: "POST", body: form });
-      const data = (await response.json()) as { note?: Comment; error?: string };
+      const response = await fetch("/api/guestbook", {
+        method: "POST",
+        body: form,
+      });
+      const data = (await response.json()) as {
+        note?: Comment;
+        error?: string;
+      };
 
       if (!response.ok || !data.note) {
         setError(data.error || "Could not publish the comment.");
@@ -93,7 +103,9 @@ export default function CommentsSection() {
 
   const handleLike = async (id: string) => {
     setComments((current) =>
-      current.map((item) => (item.id === id ? { ...item, likes: (item.likes || 0) + 1 } : item)),
+      current.map((item) =>
+        item.id === id ? { ...item, likes: (item.likes || 0) + 1 } : item,
+      ),
     );
 
     try {
@@ -106,7 +118,9 @@ export default function CommentsSection() {
       if (!response.ok) return;
       if (typeof data.likes === "number") {
         setComments((current) =>
-          current.map((item) => (item.id === id ? { ...item, likes: data.likes! } : item)),
+          current.map((item) =>
+            item.id === id ? { ...item, likes: data.likes! } : item,
+          ),
         );
       }
     } catch {
@@ -115,11 +129,10 @@ export default function CommentsSection() {
   };
 
   return (
-    <div className="comment-panel flex h-full min-w-0 flex-col rounded-2xl p-6 md:p-7">
-      <div className="mb-6">
-        <h3 className="mb-1 text-xl font-semibold tracking-[-0.02em] md:text-2xl">Comments</h3>
-        <p className="text-sm text-[var(--text-muted)]">Public notes from people who visit the site</p>
-      </div>
+    <div className="flex min-w-0 flex-col">
+      <p className="mb-5 text-sm text-[var(--text-muted)]">
+        Public notes from people who visit the site.
+      </p>
 
       <form className="mb-6 grid gap-4" onSubmit={handleSubmit}>
         <label className="sr-only" aria-hidden="true">
@@ -143,7 +156,12 @@ export default function CommentsSection() {
           />
         </label>
         <label className="field">
-          <span className="field-label">Comment</span>
+          <span className="field-label flex justify-between">
+            Comment
+            <span className="font-normal text-[var(--text-muted)]">
+              {comment.length}/500
+            </span>
+          </span>
           <textarea
             required
             maxLength={500}
@@ -157,10 +175,19 @@ export default function CommentsSection() {
         <label className="file-field">
           <span className="flex min-w-0 items-center gap-2">
             <Upload size={14} />
-            <span className="truncate">{image ? image.name : "Attach image"}</span>
+            <span className="truncate">
+              {image ? image.name : "Attach image"}
+            </span>
           </span>
-          <span className="shrink-0 text-[11px] tracking-normal text-[var(--text-muted)]">Optional · 1 MB</span>
-          <input hidden type="file" accept="image/jpeg,image/png,image/webp,image/gif" onChange={handleImage} />
+          <span className="shrink-0 text-[11px] tracking-normal text-[var(--text-muted)]">
+            Optional · 1 MB
+          </span>
+          <input
+            hidden
+            type="file"
+            accept="image/jpeg,image/png,image/webp,image/gif"
+            onChange={handleImage}
+          />
         </label>
 
         {preview && (
@@ -177,52 +204,75 @@ export default function CommentsSection() {
         {error && <p className="text-sm text-red-300/80">{error}</p>}
       </form>
 
-      <div className="custom-scroll comment-feed min-h-[160px] flex-1 overflow-y-auto rounded-[var(--r-lg)] p-3">
+      <div className="custom-scroll comment-feed max-h-[360px] min-h-[160px] overflow-y-auto rounded-[var(--r-lg)] p-3">
         {loading ? (
-          <p className="px-3 py-8 text-center text-[13px] text-[var(--text-muted)]">Loading notes...</p>
+          <p className="px-3 py-8 text-center text-[13px] text-[var(--text-muted)]">
+            Loading notes...
+          </p>
         ) : comments.length === 0 ? (
-          <p className="px-3 py-8 text-center text-[13px] text-[var(--text-muted)]">No notes yet.</p>
+          <p className="px-3 py-8 text-center text-[13px] text-[var(--text-muted)]">
+            No notes yet.
+          </p>
         ) : (
           <div className="grid gap-3">
-            {comments.map((item) => (
-              <div
-                key={item.id}
-                className={`comment-card rounded-[var(--r)] p-4 ${item.is_pinned ? "is-pinned" : ""}`}
-              >
-                <div className="flex gap-3">
-                  <div className="comment-avatar flex size-10 shrink-0 items-center justify-center rounded-full text-xs font-semibold">
-                    {item.name?.charAt(0)}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="mb-1 flex flex-wrap items-center gap-2">
-                      <p className="text-sm font-medium">{item.name}</p>
-                      {item.is_pinned && (
-                        <div className="flex items-center gap-1 rounded-full border border-[color-mix(in_oklch,var(--accent)_35%,transparent)] bg-[color-mix(in_oklch,var(--accent)_12%,transparent)] px-2 py-[3px] text-[10px] text-[var(--accent)]">
-                          <Pin size={10} />
-                          PINNED
-                        </div>
+            <AnimatePresence initial={false}>
+              {comments.map((item, index) => (
+                <motion.div
+                  key={item.id}
+                  layout
+                  initial={{ opacity: 0, y: -12, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{
+                    duration: 0.4,
+                    delay: Math.min(index, 6) * 0.04,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  className={`comment-card rounded-[var(--r)] p-4 ${item.is_pinned ? "is-pinned" : ""}`}
+                >
+                  <div className="flex gap-3">
+                    <div className="comment-avatar flex size-10 shrink-0 items-center justify-center rounded-full text-xs font-semibold">
+                      {item.name?.charAt(0)}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="mb-1 flex flex-wrap items-center gap-2">
+                        <p className="text-sm font-medium">{item.name}</p>
+                        {item.is_pinned && (
+                          <div className="flex items-center gap-1 rounded-full border border-[color-mix(in_oklch,var(--accent)_35%,transparent)] bg-[color-mix(in_oklch,var(--accent)_12%,transparent)] px-2 py-[3px] text-[10px] text-[var(--accent)]">
+                            <Pin size={10} />
+                            PINNED
+                          </div>
+                        )}
+                      </div>
+                      <p className="text-[13px] leading-relaxed text-[var(--text-secondary)]">
+                        {item.comment}
+                      </p>
+                      {item.image_url && (
+                        <img
+                          src={item.image_url}
+                          alt="Comment"
+                          className="mt-3 max-h-48 w-full rounded-xl border border-[var(--border)] object-cover"
+                        />
                       )}
                     </div>
-                    <p className="text-[13px] leading-relaxed text-[var(--text-secondary)]">{item.comment}</p>
-                    {item.image_url && (
-                      <img
-                        src={item.image_url}
-                        alt="Comment"
-                        className="mt-3 max-h-48 w-full rounded-xl border border-[var(--border)] object-cover"
-                      />
-                    )}
+                    <button
+                      type="button"
+                      onClick={() => void handleLike(item.id)}
+                      className="like-btn flex h-fit items-center gap-1 text-[11px] transition-colors"
+                    >
+                      <motion.span
+                        key={item.likes}
+                        initial={{ scale: 1.6 }}
+                        animate={{ scale: 1 }}
+                        className="inline-flex"
+                      >
+                        <Heart size={13} />
+                      </motion.span>
+                      {item.likes || 0}
+                    </button>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => void handleLike(item.id)}
-                    className="like-btn flex h-fit items-center gap-1 text-[11px] transition-colors"
-                  >
-                    <Heart size={13} />
-                    {item.likes || 0}
-                  </button>
-                </div>
-              </div>
-            ))}
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </div>
         )}
       </div>
