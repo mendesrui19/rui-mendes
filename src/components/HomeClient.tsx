@@ -8,6 +8,7 @@ import Navbar from "@/components/ui/Navbar";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
 import PortfolioShowcase from "@/components/sections/PortfolioShowcase";
+import SkillsSection from "@/components/sections/skills/SkillsSection";
 import ContactSection from "@/components/sections/contact/ContactSection";
 import WelcomeScreen from "@/components/WelcomeScreen";
 import { hasPlayedIntro, setIntroPlayed } from "@/lib/introState";
@@ -73,6 +74,7 @@ export default function HomeClient() {
         <Navbar />
         <Hero showApp={showApp} />
         <About />
+        <SkillsSection />
         <PortfolioShowcase />
         <ContactSection />
       </div>

@@ -315,6 +315,92 @@ export const techStacks = [
   { id: "supabase", name: "Supabase" },
 ];
 
+export type SkillDomain = "web" | "backend" | "ai";
+
+export type Skill = {
+  name: string;
+  domain: SkillDomain;
+  used: string[];
+};
+
+export const skillDomains: { id: SkillDomain; label: string; color: string }[] = [
+  { id: "web", label: "Web", color: "#63e2a0" },
+  { id: "backend", label: "Backend & data", color: "#5cc8e6" },
+  { id: "ai", label: "AI & data science", color: "#e8c46a" },
+];
+
+export const skills: Skill[] = [
+  { name: "TypeScript", domain: "web", used: ["MiPoetry", "56 Cervejaria", "XOXA FPS"] },
+  { name: "React", domain: "web", used: ["XOXA FPS", "SQZ Catalogue"] },
+  { name: "Next.js", domain: "web", used: ["MiPoetry", "56 Cervejaria"] },
+  { name: "JavaScript", domain: "web", used: ["Francesinha Festival", "Softideia"] },
+  { name: "HTML & CSS", domain: "web", used: ["Francesinha Festival", "Softideia"] },
+  { name: "Tailwind", domain: "web", used: ["SQZ Catalogue"] },
+  { name: "SQL", domain: "backend", used: ["Softideia", "56 Cervejaria", "MiPoetry"] },
+  { name: "Node.js", domain: "backend", used: ["Softideia", "XOXA FPS"] },
+  { name: "Laravel", domain: "backend", used: ["Softideia"] },
+  { name: "Supabase", domain: "backend", used: ["MiPoetry"] },
+  { name: "Socket.IO", domain: "backend", used: ["XOXA FPS"] },
+  { name: "Python", domain: "ai", used: ["SNS24 Triage"] },
+  { name: "Prolog", domain: "ai", used: ["SNS24 Triage"] },
+  { name: "RapidMiner", domain: "ai", used: ["SNS24 Triage"] },
+  { name: "LangChain", domain: "ai", used: ["SNS24 Triage"] },
+];
+
+export type SkillChapter = {
+  id: "intro" | SkillDomain | "all";
+  start: number;
+  kicker: string;
+  title: string;
+  body: string;
+};
+
+export const skillChapters: SkillChapter[] = [
+  {
+    id: "intro",
+    start: 0,
+    kicker: "SKILLS",
+    title: "What I actually use",
+    body: "Each bar is a skill. Its height is how many of my projects and roles used it — counted, not guessed.",
+  },
+  {
+    id: "web",
+    start: 0.2,
+    kicker: "01 · WEB",
+    title: "Products people open",
+    body: "TypeScript, React and Next.js across MiPoetry, 56 Cervejaria, XOXA FPS and the SQZ catalogue.",
+  },
+  {
+    id: "backend",
+    start: 0.42,
+    kicker: "02 · BACKEND & DATA",
+    title: "Data that has to hold",
+    body: "SQL from PL/SQL at Softideia to Neon and Supabase in production, with Node.js and Laravel on the server.",
+  },
+  {
+    id: "ai",
+    start: 0.64,
+    kicker: "03 · AI & DATA SCIENCE",
+    title: "Where the Master’s goes",
+    body: "Prolog rules, RapidMiner decision trees and a Python RAG chatbot in the SNS24 triage project — the direction of my Master’s at FEUP.",
+  },
+  {
+    id: "all",
+    start: 0.86,
+    kicker: "ALL TOGETHER",
+    title: "One stack, end to end",
+    body: "Interface, server and data in the same hands. The projects below show each of these in use.",
+  },
+];
+
+export function chapterAt(progress: number) {
+  let index = 0;
+  skillChapters.forEach((chapter, i) => {
+    if (progress >= chapter.start) index = i;
+  });
+  return index;
+}
+
 export function getProject(id: string) {
   return projects.find((project) => project.id === id);
 }
