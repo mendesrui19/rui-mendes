@@ -58,7 +58,7 @@ export default function SkillsSection() {
   const listed = domain ? skills.filter((skill) => skill.domain === domain.id) : [];
 
   return (
-    <section id="skills" ref={sectionRef} className="theme-dark relative h-[420vh]">
+    <section id="skills" ref={sectionRef} className="theme-dark relative h-[330vh]">
       <div className="skills-stage sticky top-0 h-[100svh] overflow-hidden">
         <div className="skills-canvas absolute inset-0 isolate md:left-[34%]" aria-hidden="true">
           <ErrorBoundary>

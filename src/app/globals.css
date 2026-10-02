@@ -51,6 +51,13 @@
 
   html {
     scroll-behavior: smooth;
+  }
+
+  html.lenis-on {
+    scroll-behavior: auto;
+  }
+
+  html {
     scroll-padding-top: var(--nav-h);
     scrollbar-width: none;
   }
@@ -129,9 +136,16 @@
   padding: 10px 28px;
   border-radius: 18px;
   border: 1px solid var(--border);
-  background: color-mix(in oklch, var(--bg-primary) 82%, transparent);
+  background: color-mix(in oklch, var(--bg-primary) 72%, transparent);
   box-shadow: var(--shadow-sm);
   backdrop-filter: blur(14px) saturate(1.4);
+  transition:
+    background 400ms var(--ease-out),
+    border-color 400ms var(--ease-out);
+}
+
+.nav-pill[data-scrolled="true"] {
+  background: color-mix(in oklch, var(--bg-primary) 88%, transparent);
 }
 
 .site-bg {
@@ -534,6 +548,19 @@ button.surface:hover {
   font-family: var(--font-dm-mono), monospace;
   font-size: 11px;
   color: var(--text-muted);
+}
+
+.shot {
+  opacity: 0;
+  transform: scale(1.025);
+  transition:
+    opacity 700ms var(--ease-out),
+    transform 1200ms var(--ease-out);
+}
+
+.shot[data-active="true"] {
+  opacity: 1;
+  transform: none;
 }
 
 .shot-dot {
@@ -1198,6 +1225,36 @@ button.surface:hover {
   font-weight: 500;
 }
 
+.skill-tag {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.skill-tag-head {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.skill-tag[data-hover="true"] {
+  padding: 6px 10px;
+  border-color: rgb(255 255 255 / 0.28);
+  background: rgb(6 9 7 / 0.9);
+}
+
+.skill-tag-used {
+  font-size: 10px;
+  color: #9fb8aa;
+}
+
+.skill-scale {
+  font-family: var(--font-dm-mono), monospace;
+  font-size: 10px;
+  color: #7f988a;
+  white-space: nowrap;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -1210,4 +1267,8 @@ button.surface:hover {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+.path-duration {
+  color: var(--accent);
 }

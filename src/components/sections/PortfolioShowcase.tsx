@@ -22,7 +22,13 @@ export default function PortfolioShowcase() {
 
   return (
     <section id="portfolio" className="page-shell section text-[var(--ink)]">
-      <div className="mb-10">
+      <motion.div
+        className="mb-10"
+        initial={{ opacity: 0, y: 28 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.6 }}
+        transition={{ duration: 0.8, ease }}
+      >
         <div className="max-w-2xl">
           <p className="mb-3 font-[family-name:var(--font-dm-mono)] text-[12px] tracking-[0.2em] text-[var(--text-muted)]">
             WORK
@@ -35,7 +41,7 @@ export default function PortfolioShowcase() {
             here exists on GitHub or in production.
           </p>
         </div>
-      </div>
+      </motion.div>
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,360px)_minmax(0,1fr)] lg:gap-10">
         <div
@@ -48,10 +54,14 @@ export default function PortfolioShowcase() {
           {projects.map((item, index) => {
             const selected = index === active;
             return (
-              <div
+              <motion.div
                 key={item.id}
                 className="project-item"
                 data-active={selected}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.5 }}
+                transition={{ duration: 0.6, delay: index * 0.06, ease }}
               >
                 <button
                   id={`project-${item.id}`}
@@ -112,7 +122,7 @@ export default function PortfolioShowcase() {
                     <ProjectStage project={item} compact />
                   </motion.div>
                 )}
-              </div>
+              </motion.div>
             );
           })}
           <p className="mt-5 hidden font-[family-name:var(--font-dm-mono)] text-[11px] text-[var(--text-muted)] lg:block">

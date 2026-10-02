@@ -37,7 +37,8 @@ function angleAt(t: number) {
 
 function point(r: number, deg: number) {
   const rad = (deg * Math.PI) / 180;
-  return [C + r * Math.sin(rad), C - r * Math.cos(rad)] as const;
+  const round = (v: number) => Math.round(v * 100) / 100;
+  return [round(C + r * Math.sin(rad)), round(C - r * Math.cos(rad))] as const;
 }
 
 function arc(r: number, a0: number, a1: number) {
@@ -70,6 +71,26 @@ const milestones: Milestone[] = [
   })),
 ].sort((a, b) => a.from - b.from);
 
+function formatMonths(months: number) {
+  const years = Math.floor(months / 12);
+  const rest = months % 12;
+  if (!years) return `${rest} mo`;
+  return rest ? `${years} yr ${rest} mo` : `${years} yr`;
+}
+
+function monthsOf(item: Milestone, now: number) {
+  return Math.max(1, Math.round(((item.to ?? now) - item.from) * 12));
+}
+
+function unionMonths(items: Milestone[], now: number) {
+  const months = new Set<number>();
+  for (const item of items) {
+    const end = item.to ?? now;
+    for (let t = item.from; t < end - 1e-6; t += 1 / 12) months.add(Math.round(t * 12));
+  }
+  return months.size;
+}
+
 function Digit({ value }: { value: number }) {
   return (
     <span className="odo-digit">
@@ -95,6 +116,14 @@ export default function PathSection() {
     const date = new Date();
     return Math.min(date.getFullYear() + (date.getMonth() + 0.5) / 12, START + SPAN);
   }, []);
+
+  const totals = useMemo(
+    () => ({
+      edu: unionMonths(milestones.filter((item) => item.kind === "edu"), now),
+      work: unionMonths(milestones.filter((item) => item.kind === "work"), now),
+    }),
+    [now],
+  );
 
   const [month, setMonth] = useState(0);
   const [visible, setVisible] = useState(false);
@@ -198,7 +227,7 @@ export default function PathSection() {
   const nowAngle = angleAt(now);
 
   return (
-    <section id="path" ref={sectionRef} className="relative h-[460vh]">
+    <section id="path" ref={sectionRef} className="relative h-[340vh]">
       <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden">
         <div className="page-shell grid w-full items-center gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-14">
           <div className="lg:order-2">
@@ -223,8 +252,9 @@ export default function PathSection() {
                 >
                   <span className="path-dot" />
                   <div className="min-w-0">
-                    <p className="font-[family-name:var(--font-dm-mono)] text-[11px] tracking-[0.06em] text-[var(--text-muted)]">
+                    <p className="flex flex-wrap gap-x-2 font-[family-name:var(--font-dm-mono)] text-[11px] tracking-[0.06em] text-[var(--text-muted)]">
                       {item.period}
+                      <span className="path-duration">{formatMonths(monthsOf(item, now))}</span>
                     </p>
                     <p className="path-title">{item.title}</p>
                     <p className="text-[13px] text-[var(--text-secondary)]">
@@ -338,17 +368,18 @@ export default function PathSection() {
 
             <div className="mt-4 flex justify-center gap-5 font-[family-name:var(--font-dm-mono)] text-[11px] text-[var(--text-muted)]">
               <span className="inline-flex items-center gap-2">
-                <i className="legend legend-edu" /> Education
+                <i className="legend legend-edu" /> Education · {formatMonths(totals.edu)}
               </span>
               <span className="inline-flex items-center gap-2">
-                <i className="legend legend-work" /> Work
+                <i className="legend legend-work" /> Work · {formatMonths(totals.work)}
               </span>
             </div>
           </div>
 
           <div className="path-mobile lg:hidden" key={active.id}>
             <p className="font-[family-name:var(--font-dm-mono)] text-[11px] text-[var(--text-muted)]">
-              {String(activeIndex + 1).padStart(2, "0")} / {String(milestones.length).padStart(2, "0")} · {active.period}
+              {String(activeIndex + 1).padStart(2, "0")} / {String(milestones.length).padStart(2, "0")} · {active.period} ·{" "}
+              {formatMonths(monthsOf(active, now))}
             </p>
             <p className="mt-1 text-[17px] font-semibold leading-snug">{active.title}</p>
             <p className="text-[13px] text-[var(--text-secondary)]">{active.org}</p>

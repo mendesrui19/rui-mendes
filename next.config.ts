@@ -12,6 +12,9 @@ const nextConfig: NextConfig = {
   ],
   serverExternalPackages: ["@dimforge/rapier3d-compat"],
   turbopack: {},
+  images: {
+    formats: ["image/avif", "image/webp"],
+  },
 };
 
 export default nextConfig;

@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
@@ -16,33 +15,7 @@ type HeroProps = {
 };
 
 export default function Hero({ showApp }: HeroProps) {
-  const [startAnim, setStartAnim] = useState(true);
-
-  useEffect(() => {
-    const introDone =
-      sessionStorage.getItem("introPlayed") === "true" ||
-      sessionStorage.getItem("heroPlayed") === "true";
-
-    if (introDone) {
-      setStartAnim(true);
-      return;
-    }
-
-    const delay = 2800;
-    const textTimer = setTimeout(() => setStartAnim(true), delay);
-    const appTimer = setTimeout(() => {
-      sessionStorage.setItem("heroPlayed", "true");
-    }, delay + 800);
-
-    return () => {
-      clearTimeout(textTimer);
-      clearTimeout(appTimer);
-    };
-  }, []);
-
-  const scrollToPortfolio = () => {
-    document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth" });
-  };
+  const startAnim = showApp;
 
   return (
     <section id="home" className="relative min-h-[100svh] overflow-hidden">
@@ -142,9 +115,9 @@ export default function Hero({ showApp }: HeroProps) {
                 LinkedIn
                 <ArrowUpRight size={15} />
               </a>
-              <button type="button" onClick={scrollToPortfolio} className="btn-ghost">
+              <a href="#portfolio" className="btn-ghost no-underline">
                 View projects
-              </button>
+              </a>
             </motion.div>
           </div>
         </div>

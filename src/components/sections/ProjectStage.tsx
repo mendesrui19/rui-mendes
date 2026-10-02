@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
@@ -58,18 +59,25 @@ export default function ProjectStage({ project, compact = false }: Props) {
         </div>
 
         <div className={`relative overflow-hidden ${compact ? "aspect-[16/10]" : "aspect-[16/9.5]"} ${contain ? "bg-[#ecece8]" : "bg-[var(--bg-secondary)]"}`}>
-          <AnimatePresence initial={false}>
-            <motion.img
-              key={`${project.id}-${index}`}
-              src={shots[index]}
-              alt={`${project.title} screenshot ${index + 1}`}
-              className={`absolute inset-0 h-full w-full ${contain ? "object-contain object-top p-3" : "object-cover object-top"}`}
-              initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 1.04, filter: "blur(8px)" }}
-              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.7, ease }}
-            />
-          </AnimatePresence>
+          <motion.div
+            key={project.id}
+            className="absolute inset-0"
+            initial={reduce ? false : { opacity: 0, scale: 1.03 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, ease }}
+          >
+            {shots.map((src, i) => (
+              <Image
+                key={src}
+                src={src}
+                alt={i === index ? `${project.title} screenshot ${i + 1}` : ""}
+                fill
+                sizes={compact ? "92vw" : "(min-width: 1180px) 720px, 60vw"}
+                className={`shot ${contain ? "object-contain object-top p-3" : "object-cover object-top"}`}
+                data-active={i === index}
+              />
+            ))}
+          </motion.div>
 
           {shots.length > 1 && (
             <div className="absolute inset-x-0 bottom-0 flex gap-1.5 p-3">

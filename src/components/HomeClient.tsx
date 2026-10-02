@@ -6,12 +6,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import AnimatedBackground from "@/components/AnimatedBackground";
 import Navbar from "@/components/ui/Navbar";
 import Hero from "@/components/sections/Hero";
-import About from "@/components/sections/About";
 import PortfolioShowcase from "@/components/sections/PortfolioShowcase";
 import SkillsSection from "@/components/sections/skills/SkillsSection";
 import PathSection from "@/components/sections/path/PathSection";
 import ContactSection from "@/components/sections/contact/ContactSection";
 import WelcomeScreen from "@/components/WelcomeScreen";
+import SmoothScroll from "@/components/SmoothScroll";
 import { hasPlayedIntro, setIntroPlayed } from "@/lib/introState";
 
 export default function HomeClient() {
@@ -57,7 +57,7 @@ export default function HomeClient() {
         setShowWelcome(false);
         setShowApp(true);
         setIntroPlayed();
-      }, 4200);
+      }, 2600);
 
       return () => clearTimeout(timer);
     }
@@ -70,13 +70,13 @@ export default function HomeClient() {
   return (
     <main className="relative overflow-x-clip">
       <AnimatedBackground />
+      <SmoothScroll />
 
       <div className="relative z-[2]">
         <Navbar />
         <Hero showApp={showApp} />
-        <About />
-        <SkillsSection />
         <PortfolioShowcase />
+        <SkillsSection />
         <PathSection />
         <ContactSection />
       </div>
@@ -96,7 +96,11 @@ export default function HomeClient() {
               duration: skipExit ? 0 : 1.2,
               ease: [0.76, 0, 0.24, 1],
             }}
-            className="fixed inset-0 z-[9999]"
+            className="fixed inset-0 z-[9999] cursor-pointer"
+            onClick={() => {
+              setShowWelcome(false);
+              setIntroPlayed();
+            }}
           >
             <WelcomeScreen />
           </motion.div>

@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useRef, type RefObject } from "react";
+import { useEffect, useMemo, useRef, useState, type RefObject } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Edges, Html, Sparkles } from "@react-three/drei";
+import { Edges, Html, Line, Sparkles } from "@react-three/drei";
 import { Bloom, EffectComposer, Vignette } from "@react-three/postprocessing";
 import { skillChapters, skillDomains, skills, type Skill, type SkillDomain } from "@/data/site";
 
@@ -81,6 +81,7 @@ function Bar({
   const material = useRef<THREE.MeshStandardMaterial>(null);
   const capMaterial = useRef<THREE.MeshBasicMaterial>(null);
   const glow = useRef(dim ? 0 : 1);
+  const [hovered, setHovered] = useState(false);
 
   const target = barHeight(skill.used.length);
   const color = useMemo(() => new THREE.Color(skill.color), [skill.color]);
@@ -88,10 +89,10 @@ function Bar({
   const x = Math.cos(skill.angle) * RADIUS;
   const z = Math.sin(skill.angle) * RADIUS;
 
-  useFrame((_, delta) => {
+  useFrame(({ camera }, delta) => {
     const grown = growAt(progress.current ?? 0, skill.index, total, reduced);
     const height = Math.max(0.001, target * grown);
-    glow.current = damp(glow.current, dim ? 0 : 1, 4, delta);
+    glow.current = damp(glow.current, hovered ? 1.6 : dim ? 0 : 1, 6, delta);
 
     if (body.current) {
       body.current.scale.y = height;
@@ -108,13 +109,31 @@ function Bar({
       capMaterial.current.opacity = 0.3 + glow.current * 0.7;
     }
     if (tag.current) {
-      tag.current.style.opacity = String(grown < 0.98 ? 0 : 0.28 + glow.current * 0.72);
+      const camR = Math.hypot(camera.position.x, camera.position.z);
+      const far = THREE.MathUtils.clamp(
+        (Math.hypot(camera.position.x - x, camera.position.z - z) - (camR - RADIUS)) / (2 * RADIUS),
+        0,
+        1,
+      );
+      const base = 0.28 + Math.min(glow.current, 1) * 0.72 * (1 - far * 0.65);
+      tag.current.style.opacity = String(grown < 0.98 ? 0 : hovered ? 1 : base);
     }
   });
 
   return (
     <group position={[x, 0, z]} rotation={[0, -skill.angle, 0]}>
-      <mesh ref={body}>
+      <mesh
+        ref={body}
+        onPointerOver={(event) => {
+          event.stopPropagation();
+          setHovered(true);
+          document.body.style.cursor = "pointer";
+        }}
+        onPointerOut={() => {
+          setHovered(false);
+          document.body.style.cursor = "";
+        }}
+      >
         <boxGeometry args={[0.52, 1, 0.52]} />
         <meshStandardMaterial
           ref={material}
@@ -133,9 +152,12 @@ function Bar({
       </mesh>
       <group ref={label}>
         <Html center zIndexRange={[5, 0]} pointerEvents="none">
-          <div ref={tag} className="skill-tag" style={{ opacity: 0 }}>
-            <span>{skill.name}</span>
-            <b style={{ color: skill.color }}>×{skill.used.length}</b>
+          <div ref={tag} className="skill-tag" data-hover={hovered} style={{ opacity: 0 }}>
+            <span className="skill-tag-head">
+              <span>{skill.name}</span>
+              <b style={{ color: skill.color }}>×{skill.used.length}</b>
+            </span>
+            {hovered && <span className="skill-tag-used">{skill.used.join(" · ")}</span>}
           </div>
         </Html>
       </group>
@@ -205,8 +227,8 @@ function Rig({
       lookTarget.set(0, 0.6, 0);
     } else if (current.id === "all") {
       angle = -Math.PI / 2 + 0.9 + local * 1.1;
-      radius = 14.5;
-      height = 7.5;
+      radius = 13.8;
+      height = 10.5;
       lookTarget.set(0, 0.8, 0);
     } else {
       angle = centers[current.id] + (local - 0.5) * 0.45;
@@ -233,6 +255,39 @@ function Rig({
   return null;
 }
 
+const SCALE_LEVELS = [1, 2, 3];
+const SCALE_RINGS = SCALE_LEVELS.map((count) =>
+  Array.from({ length: 97 }, (_, i) => {
+    const a = (i / 96) * Math.PI * 2;
+    return [Math.cos(a) * RADIUS, barHeight(count), Math.sin(a) * RADIUS] as [number, number, number];
+  }),
+);
+
+function Scale() {
+  const rings = SCALE_RINGS;
+  const levels = SCALE_LEVELS;
+  const labelAngle = -Math.PI / 2;
+
+  return (
+    <group>
+      {rings.map((points, i) => (
+        <Line key={i} points={points} color="#9fb8aa" lineWidth={1} transparent opacity={0.16} dashed dashSize={0.12} gapSize={0.18} />
+      ))}
+      {levels.map((count) => (
+        <Html
+          key={count}
+          position={[Math.cos(labelAngle) * RADIUS, barHeight(count), Math.sin(labelAngle) * RADIUS]}
+          center
+          zIndexRange={[4, 0]}
+          pointerEvents="none"
+        >
+          <span className="skill-scale">{count}×</span>
+        </Html>
+      ))}
+    </group>
+  );
+}
+
 export default function SkillsScene({ progress, chapter, running, reduced }: Props) {
   const active = skillChapters[chapter]?.id;
   const focus = active === "web" || active === "backend" || active === "ai" ? active : null;
@@ -240,7 +295,7 @@ export default function SkillsScene({ progress, chapter, running, reduced }: Pro
   return (
     <Canvas
       frameloop={running ? "always" : "never"}
-      dpr={[1, 1.75]}
+      dpr={[1, 1.5]}
       camera={{ position: [0, 11, 16], fov: 36, near: 0.1, far: 70 }}
       gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
     >
@@ -251,6 +306,7 @@ export default function SkillsScene({ progress, chapter, running, reduced }: Pro
       <pointLight position={[0, 4, 0]} intensity={18} distance={14} color="#63e2a0" />
 
       <Floor />
+      <Scale />
       {placed.map((skill) => (
         <Bar
           key={skill.name}
@@ -268,7 +324,7 @@ export default function SkillsScene({ progress, chapter, running, reduced }: Pro
       <Rig progress={progress} chapter={chapter} centers={centers} reduced={reduced} />
 
       <EffectComposer multisampling={0}>
-        <Bloom mipmapBlur intensity={0.7} luminanceThreshold={0.6} luminanceSmoothing={0.25} />
+        <Bloom mipmapBlur resolutionScale={0.5} intensity={0.7} luminanceThreshold={0.6} luminanceSmoothing={0.25} />
         <Vignette offset={0.28} darkness={0.55} />
       </EffectComposer>
     </Canvas>
