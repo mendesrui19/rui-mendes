@@ -261,12 +261,21 @@ export const projects: Project[] = [
   },
 ];
 
-export const education = [
+export const education: {
+  id: string;
+  school: string;
+  title: string;
+  period: string;
+  start: string;
+  end?: string;
+  detail: string;
+}[] = [
   {
     id: "feup",
     school: "FEUP",
     title: "Master in Data Science and Engineering",
     period: "Sep 2026 — present",
+    start: "2026-09",
     detail: "Faculty of Engineering of the University of Porto",
   },
   {
@@ -274,16 +283,28 @@ export const education = [
     school: "University of Minho",
     title: "Bachelor’s in Information Systems Engineering and Management",
     period: "Sep 2023 — Jul 2026",
+    start: "2023-09",
+    end: "2026-07",
     detail: "Academic standing: 150/200. Computing with management and data.",
   },
 ];
 
-export const experience = [
+export const experience: {
+  id: string;
+  title: string;
+  org: string;
+  period: string;
+  start: string;
+  end?: string;
+  place: string;
+}[] = [
   {
     id: "ideal",
     title: "Technology Consultant & Product Management Intern",
     org: "Ideal Pc Shop",
     period: "Aug 2025 — Sep 2025",
+    start: "2025-08",
+    end: "2025-09",
     place: "Felgueiras · On-site",
   },
   {
@@ -291,6 +312,8 @@ export const experience = [
     title: "Summer Camp Monitor",
     org: "Felgueiras City Council",
     period: "Jul 2025 — Aug 2025",
+    start: "2025-07",
+    end: "2025-08",
     place: "Felgueiras · On-site",
   },
   {
@@ -298,6 +321,8 @@ export const experience = [
     title: "Full Stack Developer Intern",
     org: "Softideia",
     period: "Sep 2022 — Jun 2023",
+    start: "2022-09",
+    end: "2023-06",
     place: "Felgueiras · On-site",
   },
 ];

@@ -31,13 +31,13 @@ export default function CopyCode({ label, value, hint }: Props) {
       className="surface flex w-full items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-left"
     >
       <span className="min-w-0">
-        <span className="block font-[family-name:var(--font-dm-mono)] text-[11px] tracking-[0.08em] text-white/45">
+        <span className="block font-[family-name:var(--font-dm-mono)] text-[11px] tracking-[0.08em] text-[var(--text-muted)]">
           {label}
         </span>
         <span className="block truncate text-[14px] font-semibold">{value}</span>
-        {hint ? <span className="block text-[11px] text-white/40">{hint}</span> : null}
+        {hint ? <span className="block text-[11px] text-[var(--text-muted)]">{hint}</span> : null}
       </span>
-      <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-white/10 text-white/70">
+      <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-white/10 text-[var(--text-secondary)]">
         {copied ? <Check size={14} /> : <Copy size={14} />}
       </span>
     </button>

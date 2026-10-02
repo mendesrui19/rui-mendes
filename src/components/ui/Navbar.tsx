@@ -11,7 +11,7 @@ export default function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
-      const sections = ["home", "about", "skills", "portfolio", "contact"];
+      const sections = ["home", "about", "skills", "portfolio", "path", "contact"];
 
       for (const sectionId of sections) {
         const section = document.getElementById(sectionId);
@@ -34,6 +34,7 @@ export default function Navbar() {
     { label: "About", id: "about" },
     { label: "Skills", id: "skills" },
     { label: "Work", id: "portfolio" },
+    { label: "Path", id: "path" },
     { label: "Contact", id: "contact" },
   ];
 
@@ -82,9 +83,9 @@ export default function Navbar() {
           onClick={() => setOpen(!open)}
           className="flex cursor-pointer flex-col gap-1 border-0 bg-transparent md:hidden"
         >
-          <span className="h-0.5 w-5 bg-white" />
-          <span className="h-0.5 w-5 bg-white" />
-          <span className="h-0.5 w-5 bg-white" />
+          <span className="h-0.5 w-5 bg-[var(--ink)]" />
+          <span className="h-0.5 w-5 bg-[var(--ink)]" />
+          <span className="h-0.5 w-5 bg-[var(--ink)]" />
         </button>
       </div>
 

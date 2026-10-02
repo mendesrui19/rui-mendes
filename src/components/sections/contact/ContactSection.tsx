@@ -40,7 +40,7 @@ export default function ContactSection() {
   const [mode, setMode] = useState<Mode>("message");
 
   return (
-    <section id="contact" className="page-shell section text-white">
+    <section id="contact" className="page-shell section text-[var(--ink)]">
       <div className="contact-stage grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-16">
         <motion.div
           className="relative"
@@ -109,7 +109,7 @@ export default function ContactSection() {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.8, delay: 0.1, ease }}
         >
-          <div className="mb-6 flex gap-1 rounded-full border border-[var(--border)] bg-black/30 p-1" role="tablist">
+          <div className="mb-6 flex gap-1 rounded-full border border-[var(--border)] bg-[var(--bg-secondary)] p-1" role="tablist">
             {modes.map((item) => (
               <button
                 key={item.id}
@@ -118,7 +118,7 @@ export default function ContactSection() {
                 aria-selected={mode === item.id}
                 onClick={() => setMode(item.id)}
                 className={`relative inline-flex flex-1 items-center justify-center gap-2 rounded-full py-2.5 text-sm transition-colors duration-200 ${
-                  mode === item.id ? "text-[var(--accent-ink)]" : "text-[var(--text-muted)] hover:text-white"
+                  mode === item.id ? "text-[var(--accent-ink)]" : "text-[var(--text-muted)] hover:text-[var(--ink)]"
                 }`}
               >
                 {mode === item.id && (
@@ -150,7 +150,7 @@ export default function ContactSection() {
 
       <div className="mt-20 flex flex-wrap items-center justify-between gap-3 border-t border-[var(--border)] pt-6 text-xs text-[var(--text-muted)]">
         <span>© 2026 {site.name}</span>
-        <a href="#home" className="no-underline hover:text-white">
+        <a href="#home" className="no-underline hover:text-[var(--ink)]">
           Back to top ↑
         </a>
       </div>

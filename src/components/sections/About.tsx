@@ -31,8 +31,8 @@ export default function About() {
               {item.icon}
             </div>
             <div className="absolute top-5 right-5 text-[20px] font-bold">{item.value}</div>
-            <div className="pr-8 text-[11px] tracking-[0.1em] text-white/70">{item.title}</div>
-            <span className="absolute right-4 bottom-4 text-white/50">
+            <div className="pr-8 text-[11px] tracking-[0.1em] text-[var(--text-secondary)]">{item.title}</div>
+            <span className="absolute right-4 bottom-4 text-[var(--text-muted)]">
               <ArrowUpRight size={15} />
             </span>
           </button>

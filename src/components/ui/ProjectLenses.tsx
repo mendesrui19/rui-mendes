@@ -38,11 +38,11 @@ export default function ProjectLenses({ lenses, embedded = false }: Props) {
         <div>
           <p
             id="project-brief-title"
-            className="font-[family-name:var(--font-dm-mono)] text-[12px] tracking-[0.18em] text-white/40"
+            className="font-[family-name:var(--font-dm-mono)] text-[12px] tracking-[0.18em] text-[var(--text-muted)]"
           >
             How I worked this
           </p>
-          <p className="mt-1 text-[13px] text-white/45">{trail}</p>
+          <p className="mt-1 text-[13px] text-[var(--text-muted)]">{trail}</p>
         </div>
       </div>
 
@@ -51,16 +51,16 @@ export default function ProjectLenses({ lenses, embedded = false }: Props) {
           <div
             key={chapter.key}
             className={`grid gap-4 px-5 py-6 md:grid-cols-[11rem_1fr] md:gap-10 md:px-7 md:py-7 ${
-              index > 0 ? "border-t border-white/10" : ""
+              index > 0 ? "border-t border-[var(--border)]" : ""
             }`}
           >
             <div>
               <p className="font-[family-name:var(--font-dm-mono)] text-[11px] tracking-[0.16em] text-[var(--accent)]">
                 {chapter.step} · {chapter.label}
               </p>
-              <p className="mt-1 text-[12px] leading-5 text-white/40">{chapter.hint}</p>
+              <p className="mt-1 text-[12px] leading-5 text-[var(--text-muted)]">{chapter.hint}</p>
             </div>
-            <ul className="space-y-2.5 text-[13px] leading-6 text-white/70">
+            <ul className="space-y-2.5 text-[13px] leading-6 text-[var(--text-secondary)]">
               {lenses[chapter.key]!.map((item) => (
                 <li key={item} className="flex gap-3">
                   <span className="mt-[0.7em] h-1 w-1 shrink-0 rounded-full bg-[var(--accent)]" />

@@ -58,7 +58,7 @@ export default function SkillsSection() {
   const listed = domain ? skills.filter((skill) => skill.domain === domain.id) : [];
 
   return (
-    <section id="skills" ref={sectionRef} className="relative h-[420vh]">
+    <section id="skills" ref={sectionRef} className="theme-dark relative h-[420vh]">
       <div className="skills-stage sticky top-0 h-[100svh] overflow-hidden">
         <div className="skills-canvas absolute inset-0 isolate md:left-[34%]" aria-hidden="true">
           <ErrorBoundary>
@@ -91,7 +91,7 @@ export default function SkillsSection() {
             <ul className="skills-list mt-6 grid gap-2" data-show={listed.length > 0}>
               {listed.map((skill) => (
                 <li key={skill.name} className="flex items-baseline justify-between gap-4 text-[13px]">
-                  <span className="text-white">{skill.name}</span>
+                  <span className="text-[var(--ink)]">{skill.name}</span>
                   <span className="hidden truncate text-right text-[var(--text-muted)] sm:block">
                     {skill.used.join(" · ")}
                   </span>

@@ -57,7 +57,7 @@ export default function ProjectStage({ project, compact = false }: Props) {
           <span className="browser-url">{hostOf(project)}</span>
         </div>
 
-        <div className={`relative overflow-hidden ${compact ? "aspect-[16/10]" : "aspect-[16/9.5]"} ${contain ? "bg-[#ecece8]" : "bg-black/40"}`}>
+        <div className={`relative overflow-hidden ${compact ? "aspect-[16/10]" : "aspect-[16/9.5]"} ${contain ? "bg-[#ecece8]" : "bg-[var(--bg-secondary)]"}`}>
           <AnimatePresence initial={false}>
             <motion.img
               key={`${project.id}-${index}`}

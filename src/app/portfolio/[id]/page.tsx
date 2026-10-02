@@ -26,7 +26,7 @@ export default function PortfolioDetailPage() {
 
   if (!project) {
     return (
-      <div className="flex min-h-screen items-center justify-center text-white">
+      <div className="flex min-h-screen items-center justify-center text-[var(--ink)]">
         Project not found.
       </div>
     );
@@ -50,13 +50,13 @@ export default function PortfolioDetailPage() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-x-clip px-6 py-8 pb-16 text-white md:px-10 lg:px-16">
+    <div className="relative min-h-screen overflow-x-clip px-6 py-8 pb-16 text-[var(--ink)] md:px-10 lg:px-16">
       <AnimatedBackground />
       <div className="relative z-10 mx-auto max-w-6xl">
         <button
           type="button"
           onClick={handleBack}
-          className="mb-8 inline-flex items-center gap-2 border-0 bg-transparent text-[13px] text-white/50 hover:text-white"
+          className="mb-8 inline-flex items-center gap-2 border-0 bg-transparent text-[13px] text-[var(--text-muted)] hover:text-[var(--ink)]"
         >
           <ArrowLeft size={14} />
           Work
@@ -109,7 +109,7 @@ export default function PortfolioDetailPage() {
                 className={`flex-1 rounded-full py-2.5 text-sm transition-colors duration-200 ${
                   pane === item.id
                     ? "bg-[var(--accent)] text-[var(--accent-ink)]"
-                    : "text-[var(--text-muted)] hover:text-white"
+                    : "text-[var(--text-muted)] hover:text-[var(--ink)]"
                 }`}
               >
                 {item.label}
@@ -128,7 +128,7 @@ export default function PortfolioDetailPage() {
                     <KeyRound size={15} />
                     {project.access.title}
                   </p>
-                  <p className="mb-4 text-[13px] leading-relaxed text-white/60">{project.access.detail}</p>
+                  <p className="mb-4 text-[13px] leading-relaxed text-[var(--text-secondary)]">{project.access.detail}</p>
                   <div className="grid gap-2">
                     {project.access.codes?.map((code) => (
                       <CopyCode
@@ -147,7 +147,7 @@ export default function PortfolioDetailPage() {
                   <p className="mb-3 text-[13px] font-semibold">Stack</p>
                   <div className="flex flex-wrap gap-2">
                     {tech.map((item) => (
-                      <span key={item} className="surface rounded-full px-3 py-1.5 text-[12px] text-white/75">
+                      <span key={item} className="surface rounded-full px-3 py-1.5 text-[12px] text-[var(--text-secondary)]">
                         {item}
                       </span>
                     ))}
@@ -158,7 +158,7 @@ export default function PortfolioDetailPage() {
 
             <div>
               <div
-                className={`mb-3 overflow-hidden rounded-[26px] border border-white/10 ${
+                className={`mb-3 overflow-hidden rounded-[26px] border border-[var(--border)] ${
                   contain ? "bg-[#ecece8]" : ""
                 }`}
               >
@@ -181,7 +181,7 @@ export default function PortfolioDetailPage() {
                       onClick={() => setActiveShot(index)}
                       className={`overflow-hidden rounded-xl border p-0 ${
                         contain ? "bg-[#ecece8]" : ""
-                      } ${index === activeShot ? "border-[var(--accent)]" : "border-white/10"}`}
+                      } ${index === activeShot ? "border-[var(--accent)]" : "border-[var(--border)]"}`}
                     >
                       <img
                         src={src}
@@ -198,7 +198,7 @@ export default function PortfolioDetailPage() {
               ) : null}
               <div className="surface rounded-3xl p-5">
                 <p className="mb-4 text-sm font-semibold">What’s in it</p>
-                <ul className="space-y-2.5 text-[13px] leading-6 text-white/65">
+                <ul className="space-y-2.5 text-[13px] leading-6 text-[var(--text-secondary)]">
                   {features.map((item) => (
                     <li key={item} className="flex gap-3">
                       <span className="text-[var(--accent)]">•</span>
