@@ -2,47 +2,94 @@
 
 import { motion } from "framer-motion";
 import { education, experience } from "@/data/site";
+import { Panel, SectionHead, ease } from "@/components/ui/Panel";
 
-const ease = [0.16, 1, 0.3, 1] as const;
+function toYear(ym: string) {
+  const [y, m] = ym.split("-").map(Number);
+  return y + (m - 1) / 12;
+}
 
-const steps = [
-  ...education.map((e) => ({ id: e.id, kind: "Study", title: e.title, org: e.school, period: e.period, start: e.start, note: e.detail })),
-  ...experience.map((e) => ({ id: e.id, kind: "Work", title: e.title, org: e.org, period: e.period, start: e.start, note: e.place })),
-].sort((a, b) => b.start.localeCompare(a.start));
+const now = (() => {
+  const d = new Date();
+  return d.getFullYear() + d.getMonth() / 12;
+})();
+
+const rows = [
+  ...education.map((e) => ({ id: e.id, kind: "Study", title: e.title, org: e.school, period: e.period, start: e.start, end: e.end })),
+  ...experience.map((e) => ({ id: e.id, kind: "Work", title: e.title, org: e.org, period: e.period, start: e.start, end: e.end })),
+]
+  .map((r) => ({ ...r, from: toYear(r.start), to: r.end ? toYear(r.end) + 1 / 12 : now, ongoing: !r.end }))
+  .sort((a, b) => a.from - b.from);
+
+const MIN = Math.floor(Math.min(...rows.map((r) => r.from)));
+const MAX = Math.ceil(Math.max(now, ...rows.map((r) => r.to)) + 0.01);
+const pct = (t: number) => ((t - MIN) / (MAX - MIN)) * 100;
+const years = Array.from({ length: MAX - MIN + 1 }, (_, i) => MIN + i);
 
 export default function PathSection() {
   return (
-    <section id="path" data-stage="path" className="section page-shell">
-      <header className="section-head">
-        <p className="kicker">
-          <span className="kicker-line" /> 03 · Path
-        </p>
-        <h2 className="section-title">Two strands: study and work.</h2>
-        <p className="section-lede">From full-stack internships to a Master&apos;s in data — newest first.</p>
-      </header>
+    <section id="timeline" className="dash-section">
+      <SectionHead kicker="Timeline" title="Study and work">
+        Every degree and role on one time axis. Blue is study, teal is work.
+      </SectionHead>
 
-      <ol className="path-list">
-        {steps.map((step, i) => (
-          <motion.li
-            key={step.id}
-            className="path-row"
-            data-kind={step.kind}
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.7, delay: i * 0.04, ease }}
-          >
-            <span className="path-period">{step.period}</span>
-            <span className="path-main">
-              <span className="path-title">{step.title}</span>
-              <span className="path-org">
-                {step.org} <span className="muted">· {step.note}</span>
+      <Panel title="Gantt" meta={`${MIN} — today`}>
+        <div className="gantt">
+          <div className="gantt-axis">
+            {years.map((y) => (
+              <span key={y} style={{ left: `${pct(y)}%` }}>
+                {y}
               </span>
-            </span>
-            <span className="path-kind">{step.kind}</span>
-          </motion.li>
-        ))}
-      </ol>
+            ))}
+          </div>
+
+          <div className="gantt-body">
+            <div className="gantt-grid" aria-hidden="true">
+              {years.map((y) => (
+                <i key={y} style={{ left: `${pct(y)}%` }} />
+              ))}
+              <b className="gantt-now" style={{ left: `${pct(now)}%` }}>
+                <span>today</span>
+              </b>
+            </div>
+
+            {rows.map((row, i) => (
+              <div key={row.id} className="gantt-row">
+                <div className="gantt-label">
+                  <span className="gantt-title">{row.title}</span>
+                  <span className="gantt-org">
+                    {row.org} · {row.period}
+                  </span>
+                </div>
+                <div className="gantt-track">
+                  <motion.span
+                    className="gantt-bar"
+                    data-kind={row.kind}
+                    data-ongoing={row.ongoing}
+                    style={{ left: `${pct(row.from)}%`, width: `${Math.max(1.2, pct(row.to) - pct(row.from))}%` }}
+                    initial={{ scaleX: 0 }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ once: true, amount: 0.8 }}
+                    transition={{ duration: 0.8, delay: 0.1 + i * 0.08, ease }}
+                    title={`${row.title} · ${row.period}`}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <ul className="gantt-legend">
+          <li>
+            <i data-kind="Study" /> Study
+          </li>
+          <li>
+            <i data-kind="Work" /> Work
+          </li>
+          <li>
+            <i className="is-now" /> Today
+          </li>
+        </ul>
+      </Panel>
     </section>
   );
 }

@@ -2,90 +2,85 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { AnimatePresence, motion, useMotionValue, useSpring } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { projects } from "@/data/site";
+import { SectionHead, ease } from "@/components/ui/Panel";
+import Tilt from "@/components/ui/Tilt";
 
-const ease = [0.16, 1, 0.3, 1] as const;
+const categories = ["All", ...Array.from(new Set(projects.map((p) => p.category)))];
 
 export default function PortfolioShowcase() {
-  const [hover, setHover] = useState<number | null>(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const sx = useSpring(x, { stiffness: 260, damping: 28, mass: 0.5 });
-  const sy = useSpring(y, { stiffness: 260, damping: 28, mass: 0.5 });
-
-  const onMove = (e: React.PointerEvent) => {
-    x.set(e.clientX);
-    y.set(e.clientY);
-  };
+  const [filter, setFilter] = useState("All");
+  const shown = filter === "All" ? projects : projects.filter((p) => p.category === filter);
 
   return (
-    <section id="work" data-stage="work" className="section page-shell">
-      <header className="section-head">
-        <p className="kicker">
-          <span className="kicker-line" /> 01 · Selected work
-        </p>
-        <h2 className="section-title">
-          Things I shipped<span className="count">({String(projects.length).padStart(2, "0")})</span>
-        </h2>
-        <p className="section-lede">
-          Restaurants running service on them, a festival floor, a streamer&apos;s community, a triage
-          bot. Hover to preview, open for the full story.
-        </p>
-      </header>
+    <section id="projects" className="dash-section">
+      <SectionHead kicker="Projects" title="Shipped work">
+        Each card opens a full report: screenshots, how it was built and demo access.
+      </SectionHead>
 
-      <ol className="work-list" onPointerMove={onMove} onPointerLeave={() => setHover(null)}>
-        {projects.map((project, i) => (
-          <motion.li
-            key={project.id}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: 0.7, delay: (i % 3) * 0.06, ease }}
-          >
-            <Link
-              href={`/portfolio/${project.id}`}
-              className="work-row"
-              data-dim={hover !== null && hover !== i}
-              onPointerEnter={() => setHover(i)}
+      <div className="filter-bar" role="tablist" aria-label="Filter projects">
+        {categories.map((cat) => {
+          const count = cat === "All" ? projects.length : projects.filter((p) => p.category === cat).length;
+          return (
+            <button
+              key={cat}
+              type="button"
+              role="tab"
+              aria-selected={filter === cat}
+              onClick={() => setFilter(cat)}
+              className="filter-btn"
             >
-              <span className="work-idx">{String(i + 1).padStart(2, "0")}</span>
-              <span className="work-main">
-                <span className="work-title">{project.title}</span>
-                <span className="work-desc">{project.description}</span>
-                <img className="work-thumb" src={project.image_url} alt="" loading="lazy" />
-              </span>
-              <span className="work-meta">
-                <span className="work-cat">{project.category}</span>
-                <span className="work-tech">{project.technologies}</span>
-              </span>
-              <span className="work-go">
-                <ArrowUpRight size={22} />
-              </span>
-            </Link>
-          </motion.li>
-        ))}
-      </ol>
+              {filter === cat && (
+                <motion.span layoutId="filter-pill" className="filter-pill" transition={{ duration: 0.35, ease }} />
+              )}
+              <span className="relative">{cat}</span>
+              <span className="filter-count">{count}</span>
+            </button>
+          );
+        })}
+      </div>
 
-      <motion.div className="work-preview" style={{ x: sx, y: sy }} aria-hidden="true">
-        <AnimatePresence>
-          {hover !== null && (
+      <motion.div layout className="project-grid">
+        <AnimatePresence mode="popLayout" initial={false}>
+          {shown.map((project, i) => (
             <motion.div
-              key={projects[hover].id}
-              className="work-preview-card"
-              initial={{ opacity: 0, scale: 0.85, rotate: -4 }}
-              animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.35, ease }}
+              key={project.id}
+              layout
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.45, delay: (i % 3) * 0.05, ease }}
             >
-              <img
-                src={projects[hover].image_url}
-                alt=""
-                style={{ objectFit: projects[hover].imageFit ?? "cover" }}
-              />
+              <Tilt className="pcard-tilt">
+                <Link href={`/portfolio/${project.id}`} className="pcard">
+                  <span className="pcard-media" data-fit={project.imageFit ?? "cover"}>
+                    <img src={project.image_url} alt="" loading="lazy" />
+                  </span>
+                  <span className="pcard-body">
+                    <span className="pcard-top">
+                      <span className="pcard-cat">{project.category}</span>
+                      <span className="pcard-status" data-live={Boolean(project.live_url)}>
+                        {project.live_url ? "Live" : "Code"}
+                      </span>
+                    </span>
+                    <span className="pcard-title">{project.title}</span>
+                    <span className="pcard-desc">{project.description}</span>
+                    <span className="pcard-tags">
+                      {project.technologies.split(",").map((t) => (
+                        <span key={t}>{t.trim()}</span>
+                      ))}
+                    </span>
+                    <span className="pcard-go">
+                      Open report <ArrowUpRight size={15} />
+                    </span>
+                  </span>
+                </Link>
+              </Tilt>
             </motion.div>
-          )}
+          ))}
         </AnimatePresence>
       </motion.div>
     </section>

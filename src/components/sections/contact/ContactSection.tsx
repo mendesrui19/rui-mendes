@@ -40,8 +40,8 @@ export default function ContactSection() {
   const [mode, setMode] = useState<Mode>("message");
 
   return (
-    <section id="contact" data-stage="contact" className="page-shell section text-[var(--ink)]">
-      <div className="contact-stage grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-16">
+    <section id="contact" className="dash-section text-[var(--ink)]">
+      <div className="contact-stage grid gap-8 xl:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] xl:gap-12">
         <motion.div
           className="relative"
           initial={{ opacity: 0, y: 24 }}
@@ -49,15 +49,9 @@ export default function ContactSection() {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7, ease }}
         >
-          <div className="lg:sticky lg:top-28">
-            <p className="kicker">
-              <span className="kicker-line" /> 04 · Contact
-            </p>
-            <h2 className="contact-title mb-6">
-              Let’s
-              <br />
-              talk<span className="text-[var(--accent)]">.</span>
-            </h2>
+          <div className="xl:sticky xl:top-10">
+            <p className="sec-kicker">Contact</p>
+            <h2 className="sec-title mb-4">Let’s talk</h2>
             <p className="mb-8 max-w-md text-[15px] leading-relaxed text-[var(--text-secondary)]">
               Send a message here, or leave a public note in the guestbook. I usually reply on LinkedIn.
             </p>
@@ -150,9 +144,9 @@ export default function ContactSection() {
         </motion.div>
       </div>
 
-      <div className="mt-20 flex flex-wrap items-center justify-between gap-3 border-t border-[var(--border)] pt-6 text-xs text-[var(--text-muted)]">
+      <div className="mt-16 flex flex-wrap items-center justify-between gap-3 border-t border-[var(--border)] pt-6 text-xs text-[var(--text-muted)]">
         <span>© 2026 {site.name}</span>
-        <a href="#home" className="no-underline hover:text-[var(--ink)]">
+        <a href="#overview" className="no-underline hover:text-[var(--ink)]">
           Back to top ↑
         </a>
       </div>

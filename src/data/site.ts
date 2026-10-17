@@ -327,104 +327,41 @@ export const experience: {
   },
 ];
 
-export const techStacks = [
-  { id: "js", name: "JavaScript" },
-  { id: "ts", name: "TypeScript" },
-  { id: "react", name: "React" },
-  { id: "next", name: "Next.js" },
-  { id: "node", name: "Node.js" },
-  { id: "laravel", name: "Laravel" },
-  { id: "sql", name: "SQL" },
-  { id: "prolog", name: "Prolog" },
-  { id: "tw", name: "Tailwind" },
-  { id: "supabase", name: "Supabase" },
-];
-
-export type SkillDomain = "web" | "backend" | "ai";
-
-export type Skill = {
-  name: string;
-  domain: SkillDomain;
-  used: string[];
+export type SkillGroup = {
+  id: string;
+  label: string;
+  color: string;
+  items: string[];
 };
 
-export const skillDomains: { id: SkillDomain; label: string; color: string }[] = [
-  { id: "web", label: "Web", color: "#ff5a1f" },
-  { id: "backend", label: "Backend & data", color: "#e8607e" },
-  { id: "ai", label: "AI & data science", color: "#8b93ff" },
-];
-
-export const skills: Skill[] = [
-  { name: "TypeScript", domain: "web", used: ["MiPoetry", "56 Cervejaria", "XOXA FPS"] },
-  { name: "React", domain: "web", used: ["XOXA FPS", "SQZ Catalogue"] },
-  { name: "Next.js", domain: "web", used: ["MiPoetry", "56 Cervejaria"] },
-  { name: "JavaScript", domain: "web", used: ["Francesinha Festival", "Softideia"] },
-  { name: "HTML & CSS", domain: "web", used: ["Francesinha Festival", "Softideia"] },
-  { name: "Tailwind", domain: "web", used: ["SQZ Catalogue"] },
-  { name: "SQL", domain: "backend", used: ["Softideia", "56 Cervejaria", "MiPoetry"] },
-  { name: "Node.js", domain: "backend", used: ["Softideia", "XOXA FPS"] },
-  { name: "Laravel", domain: "backend", used: ["Softideia"] },
-  { name: "Supabase", domain: "backend", used: ["MiPoetry"] },
-  { name: "Socket.IO", domain: "backend", used: ["XOXA FPS"] },
-  { name: "Python", domain: "ai", used: ["SNS24 Triage"] },
-  { name: "Prolog", domain: "ai", used: ["SNS24 Triage"] },
-  { name: "RapidMiner", domain: "ai", used: ["SNS24 Triage"] },
-  { name: "LangChain", domain: "ai", used: ["SNS24 Triage"] },
-];
-
-export type SkillChapter = {
-  id: "intro" | SkillDomain | "all";
-  start: number;
-  kicker: string;
-  title: string;
-  body: string;
-};
-
-export const skillChapters: SkillChapter[] = [
+export const skillGroups: SkillGroup[] = [
   {
-    id: "intro",
-    start: 0,
-    kicker: "SKILLS",
-    title: "What I actually use",
-    body: "Each bar is a skill. Its height is how many of my projects and roles used it — counted, not guessed.",
+    id: "dev",
+    label: "Languages & frameworks",
+    color: "#4f8cff",
+    items: ["PHP", "Laravel", "Node.js", "Python", "R", "JavaScript", "React", "HTML5", "CSS", "C++"],
   },
   {
-    id: "web",
-    start: 0.2,
-    kicker: "01 · WEB",
-    title: "Products people open",
-    body: "TypeScript, React and Next.js across MiPoetry, 56 Cervejaria, XOXA FPS and the SQZ catalogue.",
+    id: "data",
+    label: "Data & databases",
+    color: "#2dd4bf",
+    items: ["SQL", "MySQL", "PostgreSQL", "PL/SQL", "Tableau", "Data Analytics", "Database Mgmt"],
   },
   {
-    id: "backend",
-    start: 0.42,
-    kicker: "02 · BACKEND & DATA",
-    title: "Data that has to hold",
-    body: "SQL from PL/SQL at Softideia to Neon and Supabase in production, with Node.js and Laravel on the server.",
+    id: "eng",
+    label: "Engineering",
+    color: "#38bdf8",
+    items: ["REST API", "Web Services", "DevOps", "Software Eng.", "Architecture", "Arduino", "Hardware Diag."],
   },
   {
-    id: "ai",
-    start: 0.64,
-    kicker: "03 · AI & DATA SCIENCE",
-    title: "Where the Master’s goes",
-    body: "Prolog rules, RapidMiner decision trees and a Python RAG chatbot in the SNS24 triage project — the direction of my Master’s at FEUP.",
-  },
-  {
-    id: "all",
-    start: 0.86,
-    kicker: "ALL TOGETHER",
-    title: "One stack, end to end",
-    body: "Interface, server and data in the same hands. The projects below show each of these in use.",
+    id: "biz",
+    label: "Business & management",
+    color: "#a5b4fc",
+    items: ["IS Design", "IT Consulting", "Product Mgmt", "Customer Success", "Project Mgmt"],
   },
 ];
 
-export function chapterAt(progress: number) {
-  let index = 0;
-  skillChapters.forEach((chapter, i) => {
-    if (progress >= chapter.start) index = i;
-  });
-  return index;
-}
+export const skillCount = skillGroups.reduce((sum, group) => sum + group.items.length, 0);
 
 export function getProject(id: string) {
   return projects.find((project) => project.id === id);

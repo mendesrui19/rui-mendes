@@ -1,12 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Syne, Inter_Tight, JetBrains_Mono } from "next/font/google";
+import { Inter_Tight, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-
-const display = Syne({
-  subsets: ["latin"],
-  weight: ["600", "700", "800"],
-  variable: "--font-display",
-});
 
 const body = Inter_Tight({
   subsets: ["latin"],
@@ -29,7 +23,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#09090b",
+  themeColor: "#0a1020",
 };
 
 export default function RootLayout({
@@ -40,7 +34,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${display.variable} ${body.variable} ${mono.variable}`}
+      className={`${body.variable} ${mono.variable}`}
       suppressHydrationWarning
     >
       <body suppressHydrationWarning>{children}</body>
