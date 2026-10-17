@@ -1,141 +1,93 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { useState } from "react";
+import Link from "next/link";
+import { AnimatePresence, motion, useMotionValue, useSpring } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 import { projects } from "@/data/site";
-import ProjectStage from "./ProjectStage";
 
-const ease = [0.22, 1, 0.36, 1] as const;
+const ease = [0.16, 1, 0.3, 1] as const;
 
 export default function PortfolioShowcase() {
-  const [active, setActive] = useState(0);
-  const listRef = useRef<HTMLDivElement>(null);
-  const project = projects[active];
+  const [hover, setHover] = useState<number | null>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const sx = useSpring(x, { stiffness: 260, damping: 28, mass: 0.5 });
+  const sy = useSpring(y, { stiffness: 260, damping: 28, mass: 0.5 });
 
-  const focusItem = (index: number) => {
-    const next = (index + projects.length) % projects.length;
-    setActive(next);
-    listRef.current
-      ?.querySelectorAll<HTMLButtonElement>("[data-project]")
-      [next]?.focus();
+  const onMove = (e: React.PointerEvent) => {
+    x.set(e.clientX);
+    y.set(e.clientY);
   };
 
   return (
-    <section id="portfolio" className="page-shell section text-[var(--ink)]">
-      <motion.div
-        className="mb-10"
-        initial={{ opacity: 0, y: 28 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.6 }}
-        transition={{ duration: 0.8, ease }}
-      >
-        <div className="max-w-2xl">
-          <p className="mb-3 font-[family-name:var(--font-dm-mono)] text-[12px] tracking-[0.2em] text-[var(--text-muted)]">
-            WORK
-          </p>
-          <h2 className="mb-4 text-3xl font-bold tracking-[-0.03em] md:text-5xl">
-            Real projects
-          </h2>
-          <p className="text-sm leading-relaxed text-[var(--text-secondary)] md:text-base">
-            Repos, live sites and access notes. Nothing invented — everything
-            here exists on GitHub or in production.
-          </p>
-        </div>
+    <section id="work" data-stage="work" className="section page-shell">
+      <header className="section-head">
+        <p className="kicker">
+          <span className="kicker-line" /> 01 · Selected work
+        </p>
+        <h2 className="section-title">
+          Things I shipped<span className="count">({String(projects.length).padStart(2, "0")})</span>
+        </h2>
+        <p className="section-lede">
+          Restaurants running service on them, a festival floor, a streamer&apos;s community, a triage
+          bot. Hover to preview, open for the full story.
+        </p>
+      </header>
+
+      <ol className="work-list" onPointerMove={onMove} onPointerLeave={() => setHover(null)}>
+        {projects.map((project, i) => (
+          <motion.li
+            key={project.id}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.7, delay: (i % 3) * 0.06, ease }}
+          >
+            <Link
+              href={`/portfolio/${project.id}`}
+              className="work-row"
+              data-dim={hover !== null && hover !== i}
+              onPointerEnter={() => setHover(i)}
+            >
+              <span className="work-idx">{String(i + 1).padStart(2, "0")}</span>
+              <span className="work-main">
+                <span className="work-title">{project.title}</span>
+                <span className="work-desc">{project.description}</span>
+                <img className="work-thumb" src={project.image_url} alt="" loading="lazy" />
+              </span>
+              <span className="work-meta">
+                <span className="work-cat">{project.category}</span>
+                <span className="work-tech">{project.technologies}</span>
+              </span>
+              <span className="work-go">
+                <ArrowUpRight size={22} />
+              </span>
+            </Link>
+          </motion.li>
+        ))}
+      </ol>
+
+      <motion.div className="work-preview" style={{ x: sx, y: sy }} aria-hidden="true">
+        <AnimatePresence>
+          {hover !== null && (
+            <motion.div
+              key={projects[hover].id}
+              className="work-preview-card"
+              initial={{ opacity: 0, scale: 0.85, rotate: -4 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.35, ease }}
+            >
+              <img
+                src={projects[hover].image_url}
+                alt=""
+                style={{ objectFit: projects[hover].imageFit ?? "cover" }}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.div>
-
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,360px)_minmax(0,1fr)] lg:gap-10">
-        <div
-          ref={listRef}
-          className="project-list"
-          role="listbox"
-          aria-label="Projects"
-          aria-activedescendant={`project-${project.id}`}
-        >
-          {projects.map((item, index) => {
-            const selected = index === active;
-            return (
-              <motion.div
-                key={item.id}
-                className="project-item"
-                data-active={selected}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, amount: 0.5 }}
-                transition={{ duration: 0.6, delay: index * 0.06, ease }}
-              >
-                <button
-                  id={`project-${item.id}`}
-                  type="button"
-                  role="option"
-                  aria-selected={selected}
-                  data-project
-                  onClick={() => setActive(index)}
-                  onMouseEnter={() => setActive(index)}
-                  onKeyDown={(event) => {
-                    if (
-                      event.key === "ArrowDown" ||
-                      event.key === "ArrowRight"
-                    ) {
-                      event.preventDefault();
-                      focusItem(index + 1);
-                    }
-                    if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
-                      event.preventDefault();
-                      focusItem(index - 1);
-                    }
-                  }}
-                  className="project-row"
-                >
-                  {selected && (
-                    <motion.span
-                      layoutId="project-marker"
-                      className="project-marker"
-                      transition={{
-                        type: "spring",
-                        stiffness: 380,
-                        damping: 32,
-                      }}
-                    />
-                  )}
-                  <span className="project-index">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="project-title">{item.title}</span>
-                    <span className="project-meta">
-                      {item.category} ·{" "}
-                      {item.technologies.split(",").slice(0, 2).join(" ·")}
-                    </span>
-                  </span>
-                  <span className="project-arrow" aria-hidden="true">
-                    →
-                  </span>
-                </button>
-
-                {selected && (
-                  <motion.div
-                    className="pb-5 lg:hidden"
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    transition={{ duration: 0.4, ease }}
-                  >
-                    <ProjectStage project={item} compact />
-                  </motion.div>
-                )}
-              </motion.div>
-            );
-          })}
-          <p className="mt-5 hidden font-[family-name:var(--font-dm-mono)] text-[11px] text-[var(--text-muted)] lg:block">
-            Hover or use ↑ ↓ to browse
-          </p>
-        </div>
-
-        <div className="hidden lg:block">
-          <div className="sticky top-24">
-            <ProjectStage project={project} />
-          </div>
-        </div>
-      </div>
     </section>
   );
 }

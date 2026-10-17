@@ -40,7 +40,7 @@ export default function ContactSection() {
   const [mode, setMode] = useState<Mode>("message");
 
   return (
-    <section id="contact" className="page-shell section text-[var(--ink)]">
+    <section id="contact" data-stage="contact" className="page-shell section text-[var(--ink)]">
       <div className="contact-stage grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-16">
         <motion.div
           className="relative"
@@ -50,11 +50,13 @@ export default function ContactSection() {
           transition={{ duration: 0.7, ease }}
         >
           <div className="lg:sticky lg:top-28">
-            <p className="mb-3 font-[family-name:var(--font-dm-mono)] text-[12px] tracking-[0.2em] text-[var(--accent)]">
-              CONTACT
+            <p className="kicker">
+              <span className="kicker-line" /> 04 · Contact
             </p>
-            <h2 className="mb-4 text-[clamp(2.2rem,5vw,3.8rem)] font-bold leading-[1.02] tracking-[-0.04em]">
-              Let’s talk.
+            <h2 className="contact-title mb-6">
+              Let’s
+              <br />
+              talk<span className="text-[var(--accent)]">.</span>
             </h2>
             <p className="mb-8 max-w-md text-[15px] leading-relaxed text-[var(--text-secondary)]">
               Send a message here, or leave a public note in the guestbook. I usually reply on LinkedIn.

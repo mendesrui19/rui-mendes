@@ -349,9 +349,9 @@ export type Skill = {
 };
 
 export const skillDomains: { id: SkillDomain; label: string; color: string }[] = [
-  { id: "web", label: "Web", color: "#63e2a0" },
-  { id: "backend", label: "Backend & data", color: "#5cc8e6" },
-  { id: "ai", label: "AI & data science", color: "#e8c46a" },
+  { id: "web", label: "Web", color: "#ff5a1f" },
+  { id: "backend", label: "Backend & data", color: "#e8607e" },
+  { id: "ai", label: "AI & data science", color: "#8b93ff" },
 ];
 
 export const skills: Skill[] = [
