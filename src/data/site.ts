@@ -54,6 +54,72 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    id: "rasto-pedrogao",
+    title: "Rasto · Pedrógão Grande 2017",
+    category: "Data",
+    description:
+      "Interactive 3D reconstruction of the Pedrógão Grande and Góis wildfires (17–22 June 2017), built on real terrain, satellite and official data.",
+    image_url: "/assets/projects/rasto-incident.jpg",
+    image_urls: [
+      "/assets/projects/rasto-incident.jpg",
+      "/assets/projects/rasto-dashboard.jpg",
+      "/assets/projects/rasto-resources.jpg",
+      "/assets/projects/rasto-drones.jpg",
+      "/assets/projects/rasto-map2d.jpg",
+    ],
+    live_url: "https://rasto-pedrogao.vercel.app/",
+    github_url: "https://github.com/mendesrui19/rasto-pedrogao",
+    technologies: "Python, pandas, rasterio, SciPy, three.js, Sentinel-2",
+    key_features:
+      "3D terrain with Sentinel-2 imagery, fire progression timeline, burn severity, analysis dashboard, fatalities vs fire arrival, resources and drone views, 2D topo map, CSV and JSON export",
+    featured: true,
+    lenses: {
+      data: [
+        "Collected and cross-checked official reports (CTI, ADAI), ICNF/SGIF records and satellite data (Sentinel-2, NASA FIRMS, ERA5).",
+        "Reconstructed the fire progression from the ADAI isochrone map and VIIRS/MODIS detections, and validated it against the official burned area: 47,998 ha vs ICNF 48,050 ha, 91% overlap.",
+        "Digitized ANPC resource data and geolocated fatalities, command posts and road closures; dashboard covers growth rate, spread speed, FWI and fatalities vs fire arrival.",
+      ],
+      engineering: [
+        "Python pipeline (rasterio, pandas, SciPy) turns DEM, imagery, dNBR severity and NDVI into data the browser can load.",
+        "three.js app with 50 × 50 km terrain, a time-driven fire front, 10 toggleable layers and charts that scrub the map.",
+        "Code generated with AI (Claude Code) under my direction; interface inspired by Dilum Sanjaya's FireTrace concept, whose code was not used.",
+      ],
+      management: [
+        "Scoped as an illustrative study tool, not an official document; sources and limitations open on first visit.",
+        "Real data kept separate from illustrative parts: vehicle, aircraft and drone positions are clearly labelled as simulated.",
+        "Written in memory of the 66 victims, with an English and Portuguese interface.",
+      ],
+    },
+  },
+  {
+    id: "goeverywhere",
+    title: "GoEverywhere",
+    category: "Web",
+    description:
+      "Last-mile delivery platform built by a team of five at UMinho: customer site, admin console, courier PWA with GPS and a Strapi API.",
+    image_url: "/assets/projects/goeverywhere-about.jpg",
+    image_urls: [
+      "/assets/projects/goeverywhere-about.jpg",
+      "/assets/projects/goeverywhere-product.jpg",
+      "/assets/projects/goeverywhere-admin.jpg",
+    ],
+    technologies: "Vue 3, Vite, Strapi, PostgreSQL, Leaflet, PWA",
+    key_features:
+      "Customer ordering and live tracking, admin console for orders, couriers and customers, courier PWA with GPS, operations map, per-order chat, PDF invoices by email, Google sign-in",
+    lenses: {
+      management: [
+        "Team of five working on one monorepo: feature branches per person, pull requests and review before merging to main.",
+        "Requirements tracked by ID (RF14–RF28): order approval and rejection, priorities with alerts, courier states and zones.",
+        "Three audiences served by three apps: customers, operations admins and couriers on the road.",
+      ],
+      engineering: [
+        "Vue 3 + Vite Front-Office and Back-Office, a courier PWA and a Strapi (JavaScript) API on PostgreSQL.",
+        "My work included the PDF invoice sent by webhook and email with download in both sites, separate chat channels per order, and back-office logistics flows.",
+        "Leaflet operations map with live courier pins, mobile GPS over HTTPS and Google OAuth 2.0 login for admins.",
+      ],
+    },
+  },
+  {
     id: "mipoetry",
     title: "MiPoetry",
     category: "Community",
@@ -222,6 +288,68 @@ export const projects: Project[] = [
         "React 18 + Router, Tailwind, Framer Motion, Lenis smooth scroll, custom cursor.",
         "Static product data in the frontend — catalogue only, no checkout or inventory API.",
         "Category filters, hover cards and a cinematic hero video without emojis (client constraint).",
+      ],
+    },
+  },
+  {
+    id: "foto-shop",
+    title: "Foto Shop",
+    category: "Integration",
+    description:
+      "Camera e-commerce wired into business systems: products and orders from SAP, invoices in Moloni, workflows in n8n, plus admin and supplier portals.",
+    image_url: "/assets/projects/fotoshop-home.jpg",
+    image_urls: [
+      "/assets/projects/fotoshop-home.jpg",
+      "/assets/projects/fotoshop-store-home.jpg",
+      "/assets/projects/fotoshop-store-cart.jpg",
+      "/assets/projects/fotoshop-admin-dashboard.jpg",
+      "/assets/projects/fotoshop-admin-products.jpg",
+      "/assets/projects/fotoshop-admin-orders.jpg",
+      "/assets/projects/fotoshop-admin-stock.jpg",
+      "/assets/projects/fotoshop-admin-stock-alerts.jpg",
+      "/assets/projects/fotoshop-admin-suppliers.jpg",
+      "/assets/projects/fotoshop-admin-customers.jpg",
+      "/assets/projects/fotoshop-supplier-dashboard.jpg",
+      "/assets/projects/fotoshop-supplier-purchases.jpg",
+    ],
+    technologies: "React, Node.js, Express, SAP API, Moloni, n8n, Supabase, Stripe",
+    key_features:
+      "Store with cart and Stripe checkout, SAP products and orders, Moloni invoices, n8n webhooks, admin back-office for orders and products, supplier and customer management synced with SAP, multi-warehouse stock with alerts, supplier portal, barcode stock scanner",
+    lenses: {
+      management: [
+        "Order-to-invoice flow across systems: checkout creates the SAP document, the Moloni invoice and an n8n event.",
+        "Three portals for three roles: customers, store admins and suppliers (purchases, credit notes, new products).",
+        "Back-office covers orders, customers, suppliers, estimates, delivery notes, warehouses and stock.",
+      ],
+      engineering: [
+        "React frontend and an Express backend that wraps the SAP, Moloni (OAuth, token cached for 1 h) and n8n APIs.",
+        "Supabase for customer and supplier accounts; Stripe for card payments.",
+        "Barcode stock scanner in the browser (Quagga) and mocked SAP data when the ERP is unavailable in development.",
+        "Screenshots use sample data (fictional customers and suppliers) because the live SAP and Moloni accounts are offline.",
+      ],
+    },
+  },
+  {
+    id: "parking-system",
+    title: "Distributed Parking System",
+    category: "Systems",
+    description:
+      "Parking servers that talk to space sensors over TCP, expose a REST API and register with a central manager using RSA certificates and signed messages.",
+    image_url: "/assets/projects/parking-detail.jpg",
+    image_urls: ["/assets/projects/parking-detail.jpg", "/assets/projects/parking-slots.jpg"],
+    technologies: "Python, Flask, TCP sockets, threading, RSA, ReportLab",
+    key_features:
+      "Multi-threaded TCP server for sensors, REST API, signed and verified messages, live occupancy dashboard, cost calculator, PDF reports, multi-park map",
+    lenses: {
+      engineering: [
+        "Each park runs a multi-threaded TCP server; sensor clients register a space and report free or taken.",
+        "Flask REST API (/info, /lugares, /custo, /status) with /secure routes whose responses are signed with RSA.",
+        "The park registers with the manager using an X.509 certificate and checks signatures before trusting data.",
+      ],
+      data: [
+        "Live occupancy: free and taken spaces, occupancy rate and a per-space grid that refreshes on its own.",
+        "Pricing model with base fee, hourly rate and daily cap, plus a cost calculator for a given stay.",
+        "PDF occupancy reports generated on demand with ReportLab.",
       ],
     },
   },

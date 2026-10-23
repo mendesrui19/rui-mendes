@@ -39,7 +39,7 @@ export default function PortfolioDetailPage() {
 
   const handleBack = () => {
     sessionStorage.setItem("skipIntroOnce", "true");
-    router.push("/#portfolio");
+    router.push("/#projects");
   };
 
   const onPaneKey = (event: KeyboardEvent, index: number) => {
