@@ -20,7 +20,6 @@ const kpis: { label: string; value?: number; text?: string; note: string; spark:
   { label: "Projects", value: projects.length, note: `${live} live in production`, spark: categoryCounts },
   { label: "Skills", value: skillCount, note: `across ${skillGroups.length} areas`, spark: skillGroups.map((g) => g.items.length) },
   { label: "Roles", value: experience.length, note: `since ${firstYear}`, spark: rolesPerYear },
-  { label: "BSc standing", text: "150/200", note: "University of Minho", spark: [150], max: 200 },
 ];
 
 function Spark({ values, max, delay }: { values: number[]; max?: number; delay: number }) {
