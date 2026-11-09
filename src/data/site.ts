@@ -44,6 +44,7 @@ export type Project = {
   image_urls: string[];
   imageFit?: "cover" | "contain";
   live_url?: string;
+  video_url?: string;
   github_url?: string;
   technologies: string;
   key_features: string;
@@ -53,6 +54,50 @@ export type Project = {
 };
 
 export const projects: Project[] = [
+  {
+    id: "football-tracking",
+    title: "Football Tracking · FC Porto 4–1 Napoli",
+    category: "Data",
+    description:
+      "Computer-vision system that turns broadcast video into tactical data: it tracks every player and the ball, calibrates the pitch from its lines and draws a live 2D map, with an analysis of the movement behind each goal.",
+    image_url: "/assets/projects/football-goal-buildup.jpg",
+    image_urls: [
+      "/assets/projects/football-goal-buildup.jpg",
+      "/assets/projects/football-tactical-replay.jpg",
+      "/assets/projects/football-movement-tab.jpg",
+      "/assets/projects/football-named-players.jpg",
+      "/assets/projects/football-cross.jpg",
+      "/assets/projects/football-corner.jpg",
+      "/assets/projects/football-panel-goals.jpg",
+      "/assets/projects/football-stats.jpg",
+    ],
+    live_url: "/assets/projects/football-demo.mp4",
+    video_url: "/assets/projects/football-demo.mp4",
+    github_url: "https://github.com/mendesrui19/football-tracking-porto-napoli",
+    technologies: "Python, YOLO11, ByteTrack, OpenCV, PyTorch, Apple Vision OCR, JavaScript (canvas)",
+    key_features:
+      "Player and ball tracking across camera cuts, pitch calibration from line markings, live 2D tactical map, goalkeeper and referee identification, shirt numbers and names read where a close-up allows, offside line, movement analysis before each goal with runs off the ball and defenders dragged out of position, tactical replay during celebrations, danger-moment timeline",
+    featured: true,
+    lenses: {
+      data: [
+        "Detects players with YOLO11 and follows them with ByteTrack, resetting the tracker at every scene cut so identities do not jump between shots.",
+        "Pitch calibration combines a keypoint model I trained, camera-motion propagation and a check of each frame against the visible lines; frames that fail the check are left out of the map instead of guessed.",
+        "Scoreboard OCR builds the match clock, and goal times were confirmed from the audio onset plus a visual check. Video and map stay within about 0.02 s of each other.",
+        "Honest limits: shirt numbers are readable only in close-ups, the ball is often hidden, and players out of view are position estimates.",
+      ],
+      engineering: [
+        "Chunked Python pipeline (detection, tracking, calibration, ball, identities) that writes JSON segments read by a static HTML and canvas dashboard.",
+        "The dashboard draws players and ball over the video, a live 2D map, a timeline of goals and danger moments, and a replay of each goal on the map with gold arrows for runs and red arrows for defenders dragged out of position.",
+        "Verification scripts check the data, sync and goal windows before anything is shown.",
+        "Code generated with AI (Claude Code) under my direction.",
+      ],
+      management: [
+        "Scope set after a first attempt on the full match: the project moved to the 10-minute highlights to focus on quality over coverage.",
+        "Every limit is stated in the interface and the README, and positions of players out of view are marked as estimates.",
+        "Broadcast footage belongs to DAZN; the analysis, the 2D map and the dashboard are my own work, with no affiliation with the clubs or DAZN.",
+      ],
+    },
+  },
   {
     id: "rasto-pedrogao",
     title: "Rasto · Pedrógão Grande 2017",

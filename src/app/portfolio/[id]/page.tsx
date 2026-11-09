@@ -157,6 +157,17 @@ export default function PortfolioDetailPage() {
             </div>
 
             <div>
+              {project.video_url ? (
+                <video
+                  src={project.video_url}
+                  poster={project.image_url}
+                  controls
+                  muted
+                  playsInline
+                  preload="metadata"
+                  className="mb-3 w-full overflow-hidden rounded-[26px] border border-[var(--border)] bg-black"
+                />
+              ) : null}
               <div
                 className={`mb-3 overflow-hidden rounded-[26px] border border-[var(--border)] ${
                   contain ? "bg-[#ecece8]" : ""
